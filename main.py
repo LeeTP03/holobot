@@ -1,4 +1,5 @@
 import os
+import os
 import discord
 import requests
 import json
@@ -478,7 +479,15 @@ async def profile(ctx):
 
 @client.command(aliases=['ly'])
 async def loveyou(ctx):
-    await ctx.send('😘<3 goodnight bb {} ily <3😘'.format(userwaifu[userid.index(ctx.message.author.id)]))
+  author = ctx.message.author
+  v = loadwrite('userid.txt')
+  x = loadwrite('userwaifu.txt')
+  authorid = str(author.id)
+  
+  if str(authorid) in v:
+    await ctx.send('😘<3 goodnight bb {} ily <3😘'.format(x[v.index(authorid)]))
+  else:
+   await ctx.send('😘<3 goodnight bb holobot ily <3😘\n\np.s. set a !waifu')
 
 
 @client.command()
@@ -1192,8 +1201,8 @@ async def youtube(ctx, *, search):
 
 
 keep_alive.keep_alive()
-
-client.run("OTMwMDc0NzA3NTA2NjM0ODAz.Ydwlkg.d-QlFiI94SAjk80Vj93ur_euzkM")
+my_secret = os.environ['token']
+client.run(my_secret)
 
 
 
