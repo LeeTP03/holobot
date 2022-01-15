@@ -50,7 +50,7 @@ HGenSolo = ('hololive vsinger', 'vsinger', 'irys', 'azki', 'hope', 'innk', 'innk
 
 HGenOverall = (HGen0, HGen1, HGen2)
 
-smallPP = ('wadson', 'max',)
+smallPP = ('max',)
 
 alias1 = ('sora', 'robo', 'suisei', 'miko',
           'mel', 'fubuki', 'matsuri', 'aki', 'haato',
@@ -369,23 +369,27 @@ client = commands.Bot(command_prefix="!")
 query1 = ('sushi+hololive+clips', 'hololive+clips', 'hololive+vtube+tengoku+clips', 'hololive+original+songs')
 
 
-def savewaifu(filterList, filename):
-    f = open(filename, "w")
-    for word in filterList:
-        f.write(word + "\n")
+def savewrite(filterList, filename):
+    f = open(filename, "a")
+    f.write(filterList.lower().title() + "\n")
     f.close()
 
 
-def loadwaifu(filename):
+def loadwrite(filename):
     f = open(filename, "r")
     filterList = f.readlines()
 
-    # remove new lines
     for i in range(0, len(filterList)):
         filterList[i] = filterList[i][:len(filterList[i]) - 1]
 
     f.close()
     return filterList
+
+
+def saveid(filterList, filename):
+    f = open(filename, 'a')
+    for year in filterList:
+        f.write("{}\n".format(year))
 
 
 @tasks.loop(minutes=60)
@@ -436,6 +440,20 @@ async def message(message):
         return
 
 
+notgay = ('im not gay okay', 'smh i like guys is that a problem', 'give me a mean wet kiss baby boy', 'why are you gay',
+          'im not gay you are gay', 'suck on stun seed upside down')
+
+
+@client.command()
+async def gaybot(ctx):
+    await ctx.send(notgay[randint(0, len(notgay) - 1)])
+
+
+@client.command()
+async def sleep(ctx):
+    await ctx.send('It\'s {} and i need to sleep ZZZZ'.format(datetime.now()))
+
+
 @client.command()
 async def profile(ctx):
     if ctx.message.author.id in userid:
@@ -458,26 +476,22 @@ async def profile(ctx):
         await ctx.send(embed=profile)
 
 
+@client.command(aliases=['ly'])
+async def loveyou(ctx):
+    await ctx.send('😘<3 goodnight bb {} ily <3😘'.format(userwaifu[userid.index(ctx.message.author.id)]))
+
+
 @client.command()
 async def waifu(ctx):
     author = ctx.message.author
+    v = loadwrite('userid.txt')
+    x = loadwrite('userwaifu.txt')
+    authorid = str(author.id)
 
-    if author.id not in userid:
-        await ctx.send('Who is your waifu')
-
-        def check(m):
-            return m.author == ctx.author and m.channel == ctx.channel
-
-        user = await client.wait_for('message', check=check, timeout=None)
-        userid.append(author.id)
-        userwaifu.insert(userid.index(author.id), user.content.lower().title())
-        print(author.id)
-        await ctx.send('Your waifu is {}'.format(userwaifu[userid.index(author.id)]))
-
-    elif author.id in userid:
+    if str(authorid) in v:
         await ctx.send(
             'Your waifu is {}, would you like to change it?\nOr if you\'d like to remove it type \'r\''.format(
-                userwaifu[userid.index(author.id)]))
+                x[v.index(authorid)]))
 
         def check(m):
             return m.author == ctx.author and m.channel == ctx.channel
@@ -492,25 +506,56 @@ async def waifu(ctx):
 
             usernew = await client.wait_for('message', check=check, timeout=None)
 
-            if usernew.content.lower().title() == userwaifu[userid.index(author.id)]:
+            if usernew.content.lower().title() == x[v.index(authorid)]:
                 await ctx.send('Ay stop being so weird man that\'s already your waifu')
 
             else:
-                userwaifu.remove(userwaifu[userid.index(author.id)])
-                userwaifu.insert(userid.index(author.id), usernew.content.lower().title())
-                await ctx.send('Your new waifu is {}'.format(userwaifu[userid.index(author.id)]))
+
+                x = loadwrite('userwaifu.txt')
+                v = loadwrite('userid.txt')
+                u1 = x[v.index(authorid)]
+
+                with open('userwaifu.txt', 'r') as file:
+                    filedata = file.read()
+
+                filedata = filedata.replace(u1, usernew.content.lower().title())
+
+                with open('userwaifu.txt', 'w') as file:
+                    file.write(filedata)
+                reread = loadwrite('userwaifu.txt')
+                await ctx.send('Your new waifu is {}'.format(reread[v.index(authorid)]))
 
         elif user.content.lower() == 'r':
-            userwaifu.remove(userwaifu[userid.index(author.id)])
-            userid.remove(author.id)
+            x = loadwrite('userwaifu.txt')
+            v = loadwrite('userid.txt')
+            u1 = x[v.index(authorid)]
+
+            with open('userwaifu.txt', 'r') as file:
+                filedata = file.read()
+
+            filedata = filedata.replace(u1, 'None')
+
+            with open('userwaifu.txt', 'w') as file:
+                file.write(filedata)
+            reread = loadwrite('userwaifu.txt')
             await ctx.send('Your waifu has been removed')
 
         else:
             await ctx.send('I guess {} is still the best for you ;)'.format(userwaifu[userid.index(author.id)]))
 
     else:
-        x = userwaifu[userid.index(author.id)]
-        await ctx.send(x)
+        await ctx.send('Who is your waifu')
+
+        def check(m):
+            return m.author == ctx.author and m.channel == ctx.channel
+
+        user = await client.wait_for('message', check=check, timeout=None)
+        savewrite(str(authorid), 'userid.txt')
+        savewrite(str(user.content.lower().title()), 'userwaifu.txt')
+        x = loadwrite('userwaifu.txt')
+        v = loadwrite('userid.txt')
+        print(author.id)
+        await ctx.send('Your waifu is {}'.format(x[v.index(authorid)]))
 
 
 @client.command(aliases=['g'])
@@ -1148,7 +1193,7 @@ async def youtube(ctx, *, search):
 
 keep_alive.keep_alive()
 
-client.run("OTMwMDc0NzA3NTA2NjM0ODAz.Ydwlkg.bd2DJvE2VEBwIhRa_Ui1qkl8vJ4")
+client.run("OTMwMDc0NzA3NTA2NjM0ODAz.Ydwlkg.d-QlFiI94SAjk80Vj93ur_euzkM")
 
 
 
