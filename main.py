@@ -1,5 +1,4 @@
 import os
-import os
 import discord
 import requests
 import json
@@ -192,7 +191,7 @@ HoloGreeting = (
 'Konbandododooo! Tsunomaki Watame desu!', "Minna~Oru? Hololive's 4th generation, Himemori Luna nanora~",
 'Good Morning Motherfuckers',
 'La Lion~ Shishiro Botan desu!', 'Yahoo! hololive 5th Generation\'s Yukihana Lamy desu!', 'Poruka oru ka? Oru yo!',
-'Konnene! Everyone are you ready? It\'s hololive 5th Generation\'s Orange Representitive Momosuzu Nene deus!',
+'Konnene! Everyone are you ready? It\'s hololive 5th Generation\'s Orange Representitive Momosuzu Nene desu!',
 'hololive 6th Generation Secret Society HoloX\'s Samurai Bodyguard Kamaza Iroha desu!',
 'Katsumoku seyo! It\'s HoloX founder La+ Darknesss!',
 'Bakkubakkubakku~n! HoloX\'s Cleaner and Fixer Sakamata Chloe desu!',
@@ -452,7 +451,10 @@ async def gaybot(ctx):
 
 @client.command()
 async def sleep(ctx):
-    await ctx.send('It\'s {} and i need to sleep ZZZZ'.format(datetime.now()))
+    now = datetime.now()
+    time = now.strftime("%H:%M")
+
+    await ctx.send('It\'s {} and i need to sleep ZZZZ'.format(time))
 
 
 @client.command()
@@ -479,15 +481,19 @@ async def profile(ctx):
 
 @client.command(aliases=['ly'])
 async def loveyou(ctx):
-  author = ctx.message.author
-  v = loadwrite('userid.txt')
-  x = loadwrite('userwaifu.txt')
-  authorid = str(author.id)
-  
-  if str(authorid) in v:
-    await ctx.send('😘<3 goodnight bb {} ily <3😘'.format(x[v.index(authorid)]))
-  else:
-   await ctx.send('😘<3 goodnight bb holobot ily <3😘\n\np.s. set a !waifu')
+    author = ctx.message.author
+    v = loadwrite('userid.txt')
+    x = loadwrite('userwaifu.txt')
+    authorid = str(author.id)
+
+    if x[v.index(authorid)] == 'None':
+        await ctx.send('😘 <3 goodnight bb holobot ily <3 😘\n\np.s. set a !waifu')
+
+    elif str(authorid) in v:
+        await ctx.send('😘 <3 goodnight bb {} ily <3 😘'.format(x[v.index(authorid)]))
+
+    else:
+        await ctx.send('😘 <3 goodnight bb holobot ily <3 😘\n\np.s. set a !waifu')
 
 
 @client.command()
@@ -497,7 +503,28 @@ async def waifu(ctx):
     x = loadwrite('userwaifu.txt')
     authorid = str(author.id)
 
-    if str(authorid) in v:
+    if x[v.index(authorid)] == 'None':
+        await ctx.send('You don\'t have a waifu yet, who is your waifu?')
+
+        def check(m):
+            return m.author == ctx.author and m.channel == ctx.channel
+
+        usernew = await client.wait_for('message', check=check, timeout=None)
+        x = loadwrite('userwaifu.txt')
+        v = loadwrite('userid.txt')
+        u1 = x[v.index(authorid)]
+
+        with open('userwaifu.txt', 'r') as file:
+            filedata = file.read()
+
+        filedata = filedata.replace(u1, usernew.content.lower().title())
+
+        with open('userwaifu.txt', 'w') as file:
+            file.write(filedata)
+        reread = loadwrite('userwaifu.txt')
+        await ctx.send('Your new waifu is {}'.format(reread[v.index(authorid)]))
+
+    elif str(authorid) in v:
         await ctx.send(
             'Your waifu is {}, would you like to change it?\nOr if you\'d like to remove it type \'r\''.format(
                 x[v.index(authorid)]))
@@ -550,7 +577,9 @@ async def waifu(ctx):
             await ctx.send('Your waifu has been removed')
 
         else:
-            await ctx.send('I guess {} is still the best for you ;)'.format(userwaifu[userid.index(author.id)]))
+            await ctx.send('I guess {} is still the best for you ;)'.format(x[v.index(authorid)]))
+
+
 
     else:
         await ctx.send('Who is your waifu')
@@ -592,6 +621,7 @@ async def gamble(ctx):
                                                                                                              gambleHolomem,
                                                                                                              botnum,
                                                                                                              usernum))
+
     elif usernum < botnum and msg.content.lower() == 'bigger':
         await ctx.send(
             'Nice try! Your number was {} smaller, {}\'s number was {} and your number was {}'.format(userdif,
@@ -602,6 +632,8 @@ async def gamble(ctx):
                                                                                                                 gambleHolomem,
                                                                                                                 botnum,
                                                                                                                 usernum))
+    else:
+        await ctx.send('You\'re a loser, don\'t call me if you\'re not gonna gamble smh my head :rolling_eyes:')
 
 
 @client.command()
@@ -948,13 +980,13 @@ async def generation(ctx):
                              color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
         geng.set_thumbnail(url='https://c.tenor.com/rVeVTm7Qq0UAAAAd/suisei-hololive.gif')
         geng.add_field(name=holomember[14],
-                       value=HoloGreeting[14] + '\nhttps://hololive.hololivepro.com/en/talents/yozora-mel/',
+                       value=HoloGreeting[14] + '\nhttps://hololive.hololivepro.com/en/talents/inugami-korone/',
                        inline=False)
         geng.add_field(name=holomember[15],
-                       value=HoloGreeting[15] + '\nhttps://hololive.hololivepro.com/en/talents/shirakami-fubuki/',
+                       value=HoloGreeting[15] + '\nhttps://hololive.hololivepro.com/en/talents/nekomata-okayu/',
                        inline=False)
         geng.add_field(name=holomember[16],
-                       value=HoloGreeting[16] + '\nhttps://hololive.hololivepro.com/en/talents/natsuiro-matsuri/',
+                       value=HoloGreeting[16] + '\nhttps://hololive.hololivepro.com/en/talents/ookami-mio/',
                        inline=False)
 
         await ctx.send(embed=geng)
@@ -964,19 +996,19 @@ async def generation(ctx):
                              color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
         gen3.set_thumbnail(url='https://c.tenor.com/rVeVTm7Qq0UAAAAd/suisei-hololive.gif')
         gen3.add_field(name=holomember[17],
-                       value=HoloGreeting[17] + '\nhttps://hololive.hololivepro.com/en/talents/yozora-mel/',
+                       value=HoloGreeting[17] + '\nhttps://hololive.hololivepro.com/en/talents/usada-pekora/',
                        inline=False)
         gen3.add_field(name=holomember[18],
-                       value=HoloGreeting[18] + '\nhttps://hololive.hololivepro.com/en/talents/shirakami-fubuki/',
+                       value=HoloGreeting[18] + '\nhttps://hololive.hololivepro.com/en/talents/shiranui-flare/',
                        inline=False)
         gen3.add_field(name=holomember[19],
-                       value=HoloGreeting[19] + '\nhttps://hololive.hololivepro.com/en/talents/natsuiro-matsuri/',
+                       value=HoloGreeting[19] + '\nhttps://hololive.hololivepro.com/en/talents/houshou-marine/',
                        inline=False)
         gen3.add_field(name=holomember[20],
-                       value=HoloGreeting[20] + '\nhttps://hololive.hololivepro.com/en/talents/aki-rosenthal/',
+                       value=HoloGreeting[20] + '\nhttps://hololive.hololivepro.com/en/talents/shirogane-noel/',
                        inline=False)
         gen3.add_field(name=holomember[21],
-                       value=HoloGreeting[21] + '\nhttps://hololive.hololivepro.com/en/talents/akai-haato/',
+                       value=HoloGreeting[21] + '\nhttps://hololive.hololivepro.com/en/talents/uruha-rushia/',
                        inline=False)
 
         await ctx.send(embed=gen3)
@@ -986,19 +1018,19 @@ async def generation(ctx):
                              color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
         gen4.set_thumbnail(url='https://c.tenor.com/rVeVTm7Qq0UAAAAd/suisei-hololive.gif')
         gen4.add_field(name=holomember[22],
-                       value=HoloGreeting[22] + '\nhttps://hololive.hololivepro.com/en/talents/yozora-mel/',
+                       value=HoloGreeting[22] + '\nhttps://hololive.hololivepro.com/en/talents/tokoyami-towa/',
                        inline=False)
         gen4.add_field(name=holomember[23],
-                       value=HoloGreeting[23] + '\nhttps://hololive.hololivepro.com/en/talents/shirakami-fubuki/',
+                       value=HoloGreeting[23] + '\nhttps://hololive.hololivepro.com/en/talents/amane-kanata/',
                        inline=False)
         gen4.add_field(name=holomember[24],
-                       value=HoloGreeting[24] + '\nhttps://hololive.hololivepro.com/en/talents/natsuiro-matsuri/',
+                       value=HoloGreeting[24] + '\nhttps://hololive.hololivepro.com/en/talents/tsunomaki-watame/',
                        inline=False)
         gen4.add_field(name=holomember[25],
-                       value=HoloGreeting[25] + '\nhttps://hololive.hololivepro.com/en/talents/aki-rosenthal/',
+                       value=HoloGreeting[25] + '\nhttps://hololive.hololivepro.com/en/talents/himemori-luna/',
                        inline=False)
         gen4.add_field(name=holomember[26],
-                       value=HoloGreeting[26] + '\nhttps://hololive.hololivepro.com/en/talents/akai-haato/',
+                       value=HoloGreeting[26] + '\nhttps://hololive.hololivepro.com/en/talents/kiryu-coco/',
                        inline=False)
 
         await ctx.send(embed=gen4)
@@ -1008,16 +1040,16 @@ async def generation(ctx):
                              color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
         gen5.set_thumbnail(url='https://c.tenor.com/rVeVTm7Qq0UAAAAd/suisei-hololive.gif')
         gen5.add_field(name=holomember[27],
-                       value=HoloGreeting[27] + '\nhttps://hololive.hololivepro.com/en/talents/yozora-mel/',
+                       value=HoloGreeting[27] + '\nhttps://hololive.hololivepro.com/en/talents/shishiro-botan/',
                        inline=False)
         gen5.add_field(name=holomember[28],
-                       value=HoloGreeting[28] + '\nhttps://hololive.hololivepro.com/en/talents/shirakami-fubuki/',
+                       value=HoloGreeting[28] + '\nhttps://hololive.hololivepro.com/en/talents/yukihana-lamy/',
                        inline=False)
         gen5.add_field(name=holomember[29],
-                       value=HoloGreeting[29] + '\nhttps://hololive.hololivepro.com/en/talents/natsuiro-matsuri/',
+                       value=HoloGreeting[29] + '\nhttps://hololive.hololivepro.com/en/talents/omaru-polka/',
                        inline=False)
         gen5.add_field(name=holomember[30],
-                       value=HoloGreeting[30] + '\nhttps://hololive.hololivepro.com/en/talents/aki-rosenthal/',
+                       value=HoloGreeting[30] + '\nhttps://hololive.hololivepro.com/en/talents/momosuzu-nene/',
                        inline=False)
 
         await ctx.send(embed=gen5)
@@ -1027,19 +1059,19 @@ async def generation(ctx):
                              color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
         gen6.set_thumbnail(url='https://c.tenor.com/rVeVTm7Qq0UAAAAd/suisei-hololive.gif')
         gen6.add_field(name=holomember[31],
-                       value=HoloGreeting[31] + '\nhttps://hololive.hololivepro.com/en/talents/yozora-mel/',
+                       value=HoloGreeting[31] + '\nhttps://hololive.hololivepro.com/en/talents/kazama-iroha/',
                        inline=False)
         gen6.add_field(name=holomember[32],
-                       value=HoloGreeting[32] + '\nhttps://hololive.hololivepro.com/en/talents/shirakami-fubuki/',
+                       value=HoloGreeting[32] + '\nhttps://hololive.hololivepro.com/en/talents/la-darknesss/',
                        inline=False)
         gen6.add_field(name=holomember[33],
-                       value=HoloGreeting[33] + '\nhttps://hololive.hololivepro.com/en/talents/natsuiro-matsuri/',
+                       value=HoloGreeting[33] + '\nhttps://hololive.hololivepro.com/en/talents/sakamata-chloe/',
                        inline=False)
         gen6.add_field(name=holomember[34],
-                       value=HoloGreeting[34] + '\nhttps://hololive.hololivepro.com/en/talents/aki-rosenthal/',
+                       value=HoloGreeting[34] + '\nhttps://hololive.hololivepro.com/en/talents/takane-lui/',
                        inline=False)
         gen6.add_field(name=holomember[35],
-                       value=HoloGreeting[35] + '\nhttps://hololive.hololivepro.com/en/talents/akai-haato/',
+                       value=HoloGreeting[35] + '\nhttps://hololive.hololivepro.com/en/talents/hakui-koyori/',
                        inline=False)
 
         await ctx.send(embed=gen6)
@@ -1049,19 +1081,19 @@ async def generation(ctx):
                                color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
         genEN1.set_thumbnail(url='https://c.tenor.com/rVeVTm7Qq0UAAAAd/suisei-hololive.gif')
         genEN1.add_field(name=holomember[37],
-                         value=HoloGreeting[37] + '\nhttps://hololive.hololivepro.com/en/talents/yozora-mel/',
+                         value=HoloGreeting[37] + '\nhttps://hololive.hololivepro.com/en/talents/gawr-gura/',
                          inline=False)
         genEN1.add_field(name=holomember[38],
-                         value=HoloGreeting[38] + '\nhttps://hololive.hololivepro.com/en/talents/shirakami-fubuki/',
+                         value=HoloGreeting[38] + '\nhttps://hololive.hololivepro.com/en/talents/mori-calliope/',
                          inline=False)
         genEN1.add_field(name=holomember[39],
-                         value=HoloGreeting[39] + '\nhttps://hololive.hololivepro.com/en/talents/natsuiro-matsuri/',
+                         value=HoloGreeting[39] + '\nhttps://hololive.hololivepro.com/en/talents/ninomae-inanis/',
                          inline=False)
         genEN1.add_field(name=holomember[40],
-                         value=HoloGreeting[40] + '\nhttps://hololive.hololivepro.com/en/talents/aki-rosenthal/',
+                         value=HoloGreeting[40] + '\nhttps://hololive.hololivepro.com/en/talents/watson-amelia/',
                          inline=False)
         genEN1.add_field(name=holomember[41],
-                         value=HoloGreeting[41] + '\nhttps://hololive.hololivepro.com/en/talents/akai-haato/',
+                         value=HoloGreeting[41] + '\nhttps://hololive.hololivepro.com/en/talents/takanashi-kiara/',
                          inline=False)
 
         await ctx.send(embed=genEN1)
@@ -1071,19 +1103,19 @@ async def generation(ctx):
                                color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
         genEN2.set_thumbnail(url='https://c.tenor.com/rVeVTm7Qq0UAAAAd/suisei-hololive.gif')
         genEN2.add_field(name=holomember[42],
-                         value=HoloGreeting[42] + '\nhttps://hololive.hololivepro.com/en/talents/yozora-mel/',
+                         value=HoloGreeting[42] + '\nhttps://hololive.hololivepro.com/en/talents/ouro-kronii/',
                          inline=False)
         genEN2.add_field(name=holomember[43],
-                         value=HoloGreeting[43] + '\nhttps://hololive.hololivepro.com/en/talents/shirakami-fubuki/',
+                         value=HoloGreeting[43] + '\nhttps://hololive.hololivepro.com/en/talents/nanashi-mumei/',
                          inline=False)
         genEN2.add_field(name=holomember[44],
-                         value=HoloGreeting[44] + '\nhttps://hololive.hololivepro.com/en/talents/natsuiro-matsuri/',
+                         value=HoloGreeting[44] + '\nhttps://hololive.hololivepro.com/en/talents/hakos-baelz/',
                          inline=False)
         genEN2.add_field(name=holomember[45],
-                         value=HoloGreeting[45] + '\nhttps://hololive.hololivepro.com/en/talents/aki-rosenthal/',
+                         value=HoloGreeting[45] + '\nhttps://hololive.hololivepro.com/en/talents/ceres-fauna/',
                          inline=False)
         genEN2.add_field(name=holomember[46],
-                         value=HoloGreeting[46] + '\nhttps://hololive.hololivepro.com/en/talents/akai-haato/',
+                         value=HoloGreeting[46] + '\nhttps://hololive.hololivepro.com/en/talents/tsukumo-sana/',
                          inline=False)
 
         await ctx.send(embed=genEN2)
@@ -1093,22 +1125,22 @@ async def generation(ctx):
                               color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
         genID.set_thumbnail(url='https://c.tenor.com/rVeVTm7Qq0UAAAAd/suisei-hololive.gif')
         genID.add_field(name=holomember[48],
-                        value=HoloGreeting[48] + '\nhttps://hololive.hololivepro.com/en/talents/yozora-mel/',
+                        value=HoloGreeting[48] + '\nhttps://hololive.hololivepro.com/en/talents/ayunda-risu/',
                         inline=False)
         genID.add_field(name=holomember[49],
-                        value=HoloGreeting[49] + '\nhttps://hololive.hololivepro.com/en/talents/shirakami-fubuki/',
+                        value=HoloGreeting[49] + '\nhttps://hololive.hololivepro.com/en/talents/moona-hoshinova/',
                         inline=False)
         genID.add_field(name=holomember[50],
-                        value=HoloGreeting[50] + '\nhttps://hololive.hololivepro.com/en/talents/natsuiro-matsuri/',
+                        value=HoloGreeting[50] + '\nhttps://hololive.hololivepro.com/en/talents/airani-iofifteen/',
                         inline=False)
         genID.add_field(name=holomember[51],
-                        value=HoloGreeting[51] + '\nhttps://hololive.hololivepro.com/en/talents/aki-rosenthal/',
+                        value=HoloGreeting[51] + '\nhttps://hololive.hololivepro.com/en/talents/kureiji-ollie/',
                         inline=False)
         genID.add_field(name=holomember[52],
-                        value=HoloGreeting[52] + '\nhttps://hololive.hololivepro.com/en/talents/akai-haato/',
+                        value=HoloGreeting[52] + '\nhttps://hololive.hololivepro.com/en/talents/anya-melfissa/',
                         inline=False)
         genID.add_field(name=holomember[53],
-                        value=HoloGreeting[53] + '\nhttps://hololive.hololivepro.com/en/talents/akai-haato/',
+                        value=HoloGreeting[53] + '\nhttps://hololive.hololivepro.com/en/talents/pavolia-reine/',
                         inline=False)
 
         await ctx.send(embed=genID)
@@ -1118,11 +1150,9 @@ async def generation(ctx):
                                 color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
         genSolo.set_thumbnail(url='https://c.tenor.com/rVeVTm7Qq0UAAAAd/suisei-hololive.gif')
         genSolo.add_field(name=holomember[36],
-                          value=HoloGreeting[36] + '\nhttps://hololive.hololivepro.com/en/talents/yozora-mel/',
-                          inline=False)
+                          value=HoloGreeting[36] + '\nhttps://hololive.hololivepro.com/en/talents/azki/', inline=False)
         genSolo.add_field(name=holomember[47],
-                          value=HoloGreeting[47] + '\nhttps://hololive.hololivepro.com/en/talents/shirakami-fubuki/',
-                          inline=False)
+                          value=HoloGreeting[47] + '\nhttps://hololive.hololivepro.com/en/talents/irys/', inline=False)
 
         await ctx.send(embed=genSolo)
 
@@ -1201,8 +1231,8 @@ async def youtube(ctx, *, search):
 
 
 keep_alive.keep_alive()
-my_secret = os.environ['token']
-client.run(my_secret)
+
+client.run("xxx")
 
 
 
