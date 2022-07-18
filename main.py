@@ -22,54 +22,6 @@ import keep_alive
 
 from discord.ext import commands
 
-HGen0 = ('hololive gen 0', 'gen 0', '0', 'sora', 'robo', 'suisei', 'miko', 'tokino sora', 'roboco', 'hoshimachi suisei',
-         'sakura miko', 'suichan')
-HGen1 = ('hololive gen 1', 'gen 1', '1', 'mel', 'fubuki', 'matsuri', 'aki', 'haato', 'yozora mel', 'shirakami fubuki',
-         'natsuiro matsuri', 'aki rosenthal', 'akai haato', 'akirose', 'hentai', 'haachama', 'fbk')
-HGen2 = ('hololive gen 2', 'gen 2', '2', 'aqua', 'shion', 'choco', 'subaru', 'ayame', 'minato aqua', 'murasaki shion',
-         'yuzuki choco', 'oozora subaru', 'shuba', '44.5')
-HGenGamers = (
-    'hololive gamers', 'gamers', 'okayu', 'korone', 'mio', 'inugami korone', 'nekomata okayu', 'ookami mio', 'miosha')
-HGen3 = ('hololive gen 3', 'gen 3', '3', 'fantasy', 'pekora', 'flare', 'marine', 'noel', 'rushia', 'usada pekora',
-         'shiranui flare', 'houshou marine', 'shirogane noel', 'uruha rushia', 'senchou', 'futan', 'pettanko')
-HGen4 = ('hololive gen 4', 'gen 4', '4', 'towa', 'kanata', 'watame', 'luna', 'coco', 'tokoyami towa', 'amane kanata',
-         'tsunomaki watame', 'himemori luna', 'kiryu coco', 'towasama')
-HGen5 = (
-    'hololive gen 5', 'gen 5', '5', 'holofive', 'botan', 'lamy', 'polka', 'nene', 'shishiro botan', 'yukihana lamy',
-    'omaru polka', 'momosuzu nene', 'nenechi')
-HGen6 = (
-    'hololive gen 6', 'gen 6', '6', 'holox', 'iroha', 'laplus', 'chloe', 'lui', 'koyori', 'kazama iroha', 'laplus darkness',
-    'sakamata chloe', 'takane lui', 'hakui koyori', 'yamada')
-HGenEn1 = (
-    'holoen gen 1', 'en gen 1', 'myth', 'en 1', 'gura', 'calli', 'ina', 'ame', 'kiara', 'gawr gura', 'mori calliope',
-    'ninomae ina\'nis', 'watson amelia', 'takanashi kiara', 'amelia')
-HGenEn2 = ('holoen gen 2', 'en gen 2', 'council', 'en 2', 'kronii', 'mumei', 'bae', 'fauna', 'sana', 'ouro kronii',
-           'nanashi mumei', 'hakos baelz', 'ceres fauna', 'tsukumo sana')
-HGenID = (
-    'holoid', 'id', 'ayunda risu', 'moona hoshinova', 'airani iofifteen', 'kureiji ollie', 'anya melfissa', 'pavolia reine',
-    'risu', 'moona', 'iofi', 'ollie', 'anya', 'reine')
-HGenSolo = ('hololive vsinger', 'vsinger', 'irys', 'azki',
-            'hope', 'innk', 'innk music', 'inonaka')
-
-HGenOverall = (HGen0, HGen1, HGen2)
-
-smallPP = ('max',)
-
-alias1 = ('sora', 'robo', 'suisei', 'miko',
-          'mel', 'fubuki', 'matsuri', 'aki', 'haato',
-          'aqua', 'shion', 'choco', 'subaru', 'ayame',
-          'okayu', 'korone', 'mio',
-          'pekora', 'flare', 'marine', 'noel', 'rushia',
-          'towa', 'kanata', 'watame', 'luna', 'coco',
-          'botan', 'lamy', 'polka', 'nene',
-          'iroha', 'laplus', 'chloe', 'lui', 'koyori',
-          'azki',
-          'gura', 'calli', 'ina', 'ame', 'kiara',
-          'kronii', 'mumei', 'bae', 'fauna', 'sana',
-          'irys',
-          'risu', 'moona', 'iofi',
-          'ollie', 'anya', 'reine')
-
 HoloInfo = [ 
     ['Tokino Sora','ときのそら','May 15','160 cm','Ordan','hololive Generation 0','September 7th 2017','Sora-tomo','🐻💿','https://static.wikia.nocookie.net/virtualyoutuber/images/5/52/Tokino_Sora_-_Icon.png/revision/latest/scale-to-width-down/100?cb=20210901132939','https://twitter.com/tokino_sora','Sora-tomo no Minna~! Genki~?Konsomē! Tokino Sora desu! Sora-tomos~! How are you doing~? Konsomē! I\'m Tokino Sora!','Tokino+Sora','Sora','Goddess'],
     ['Roboco-san','ロボ子','May 23','154 cm','Kuromaru9','hololive Generation 0','March 4th 2018','Robosa','🤖','https://static.wikia.nocookie.net/virtualyoutuber/images/7/70/Roboco_San_-_Icon.png/revision/latest/scale-to-width-down/100?cb=20210901132755','https://twitter.com/robocosan','Hellobo! Roboco dayo!','Roboco+hololive','Roboco'],
