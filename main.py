@@ -711,13 +711,14 @@ async def allstreaming(ctx):
 
     msg = await client.wait_for('message', check=check, timeout=None)
 
-    if (int(msg.content)) <= len(queue):
-        await ctx.send(queue[(int(msg.content))] + ' is currently streaming!\nThis is the stream link. ' + newvid(HoloChId[checklist.index(queue[(int(msg.content))])]))
     if msg.content.lower() == 'show queue':
         for i in range(len(queue)):
             await ctx.send(queue[i] + ' is currently streaming!\nThis is the stream link. ' + newvid(HoloChId[checklist.index(queue[i])]))
+    elif (int(msg.content)) <= len(queue):
+        await ctx.send(queue[(int(msg.content))] + ' is currently streaming!\nThis is the stream link. ' + newvid(HoloChId[checklist.index(queue[(int(msg.content))])]))
+    
 
 
 keep_alive.keep_alive()
 
-client.run('XXX')
+client.run('OTMwMDc0NzA3NTA2NjM0ODAz.GvZ1vo.P0IBjzRVodECnEDwxHd2rOAm0HyoyjpWh7ytQs')
