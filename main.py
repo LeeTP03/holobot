@@ -11,16 +11,48 @@ import asyncio
 import urllib.parse
 import urllib.request
 import re
-from discord_components import Button, ButtonStyle, ActionRow
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.triggers.cron import CronTrigger
 from discord.ext import tasks
 from flask import Flask
 from threading import Thread
 from datetime import datetime
 import keep_alive
+import urllib.parse, urllib.request, re
+import youtube_dl
+from datetime import datetime
+from itertools import cycle
+import requests
+import urllib.request 
+from bs4 import BeautifulSoup
+import json
 
 from discord.ext import commands
+
+url = [
+    'https://www.youtube.com/channel/UCp6993wxpyDPHUpavwDFqgg','https://www.youtube.com/channel/UCDqI2jOz0weumE8s7paEk6g','https://www.youtube.com/channel/UC5CwaMl1eIgY8h02uZw7u8A','https://www.youtube.com/channel/UC-hM6YJuNYVAmUWxeIr9FeA','https://www.youtube.com/channel/UC0TXe_LYZ4scaW2XMyi5_kw',
+    'https://www.youtube.com/channel/UCD8HOxPs4Xvsm8H0ZxXGiBw','https://www.youtube.com/channel/UCdn5BQ06XqgXoAxIhbqw5Rg','https://www.youtube.com/channel/UCQ0UDLQCjY0rmuxCDE38FGg','https://www.youtube.com/channel/UCFTLzh12_nrtzqBPsTCqenA','https://www.youtube.com/channel/UC1CfXB_kRs3C-zaeTG3oGyg',
+    'https://www.youtube.com/channel/UC1opHUrw8rvnsadT-iGp7Cg','https://www.youtube.com/channel/UCXTpFs_3PqI41qX2d9tL2Rw','https://www.youtube.com/channel/UC1suqwovbL1kzsoaZgFZLKg','https://www.youtube.com/channel/UCvzGlP9oQwU--Y0r9id_jnA','https://www.youtube.com/channel/UC7fk0CB07ly8oSl0aqKkqFg',
+    'https://www.youtube.com/channel/UCvaTdHTWBGv3MKj3KVqJVCw','https://www.youtube.com/channel/UChAnqc_AY5_I3Px5dig3X1Q','https://www.youtube.com/channel/UCp-5t9SrOQwXMU7iIjQfARg',
+    'https://www.youtube.com/channel/UC1DCedRgGHBdm81E1llLhOQ','https://www.youtube.com/channel/UCvInZx9h3jC2JzsIzoOebWg','https://www.youtube.com/channel/UCCzUftO8KOVkV4wQG1vkUvg','https://www.youtube.com/channel/UCdyqAaZDKHXg4Ahi7VENThQ','https://www.youtube.com/channel/UCl_gCybOJRIgOXw6Qb4qJzQ',
+    'https://www.youtube.com/channel/UC1uv2Oq6kNxgATlCiez59hw','https://www.youtube.com/c/AmaneKanataCh','https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA','https://www.youtube.com/channel/UCa9Y57gfeY0Zro_noHRVrnw','https://www.youtube.com/channel/UCS9uQI-jC3DE0L4IpXyvr6w',
+    'https://www.youtube.com/channel/UCUKD-uaobj9jiqB-VXt71mA','https://www.youtube.com/channel/UCFKOVgVbGmX65RxO3EtH3iw','https://www.youtube.com/channel/UCK9V2B22uJYu3N7eR_BT9QA','https://www.youtube.com/channel/UCAWSyEs_Io8MtpY3m-zqILA',
+    'https://www.youtube.com/channel/UC_vMYWcDjmfdpH6r4TTn1MQ','https://www.youtube.com/channel/UCENwRMx5Yh42zWpzURebzTw','https://www.youtube.com/channel/UCIBY1ollUsauvVi4hW4cumw','https://www.youtube.com/channel/UCs9_O1tRPMQTHQ-N_L6FU2g','https://www.youtube.com/channel/UC6eWCld0KwmyHFbAqK3V-Rw',
+    'https://www.youtube.com/channel/UCoSrY_IQQVpmIRZ9Xf-y93g','https://www.youtube.com/channel/UCL_qhgtOy0dy1Agp8vkySQg','https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg','https://www.youtube.com/channel/UCyl1z3jo3XHR1riLFKG5UAg','https://www.youtube.com/channel/UCHsx4Hqa-1ORjQTh9TYDhww',
+    'https://www.youtube.com/channel/UC8rcEBzJSleTkf_-agPM20g',
+    'https://www.youtube.com/channel/UC3n5uGu18FoCy23ggWWp8tA','https://www.youtube.com/c/OuroKroniiCh','https://www.youtube.com/channel/UCgmPnx-EEeOrZSg5Tiw7ZRQ','https://www.youtube.com/channel/UCO_aKKYxn4tvrqPjcTzZ6EQ','https://www.youtube.com/channel/UCsUj0dszADCGbF3gNrQEuSQ',
+    'https://www.youtube.com/channel/UCOyYb1c43VlX9rc_lT6NKQw','https://www.youtube.com/channel/UCP0BspO_AMEe3aQqqpo89Dg','https://www.youtube.com/channel/UCAoy6rzhSf4ydcYjJw3WoVg','https://www.youtube.com/channel/UCYz_5n-uDuChHtLo7My1HnQ','https://www.youtube.com/channel/UC727SQYUvx5pDDGQpTICNWg','https://www.youtube.com/channel/UChgTyjG-pdNvxxhdsXfHQ5Q']
+    
+HoloChId = ['UCp6993wxpyDPHUpavwDFqgg', 'UCDqI2jOz0weumE8s7paEk6g', 'UC5CwaMl1eIgY8h02uZw7u8A', 'UC-hM6YJuNYVAmUWxeIr9FeA', 'UC0TXe_LYZ4scaW2XMyi5_kw',
+'UCD8HOxPs4Xvsm8H0ZxXGiBw', 'UCdn5BQ06XqgXoAxIhbqw5Rg', 'UCQ0UDLQCjY0rmuxCDE38FGg', 'UCFTLzh12_nrtzqBPsTCqenA', 'UC1CfXB_kRs3C-zaeTG3oGyg',
+'UC1opHUrw8rvnsadT-iGp7Cg', 'UCXTpFs_3PqI41qX2d9tL2Rw', 'UC1suqwovbL1kzsoaZgFZLKg','UCvzGlP9oQwU--Y0r9id_jnA', 'UC7fk0CB07ly8oSl0aqKkqFg', 
+'UCvaTdHTWBGv3MKj3KVqJVCw', 'UChAnqc_AY5_I3Px5dig3X1Q', 'UCp-5t9SrOQwXMU7iIjQfARg', 
+'UC1DCedRgGHBdm81E1llLhOQ', 'UCvInZx9h3jC2JzsIzoOebWg', 'UCCzUftO8KOVkV4wQG1vkUvg', 'UCdyqAaZDKHXg4Ahi7VENThQ', 'UCl_gCybOJRIgOXw6Qb4qJzQ', 
+'UC1uv2Oq6kNxgATlCiez59hw', 'anataCh', 'UCqm3BQLlJfvkTsX_hvm0UmA', 'UCa9Y57gfeY0Zro_noHRVrnw', 'UCS9uQI-jC3DE0L4IpXyvr6w', 
+'UCUKD-uaobj9jiqB-VXt71mA', 'UCFKOVgVbGmX65RxO3EtH3iw', 'UCK9V2B22uJYu3N7eR_BT9QA', 'UCAWSyEs_Io8MtpY3m-zqILA', 
+'UC_vMYWcDjmfdpH6r4TTn1MQ', 'UCENwRMx5Yh42zWpzURebzTw', 'UCIBY1ollUsauvVi4hW4cumw', 'UCs9_O1tRPMQTHQ-N_L6FU2g', 'UC6eWCld0KwmyHFbAqK3V-Rw',
+'UCoSrY_IQQVpmIRZ9Xf-y93g', 'UCL_qhgtOy0dy1Agp8vkySQg', 'UCMwGHR0BTZuLsmjY_NT5Pwg', 'UCyl1z3jo3XHR1riLFKG5UAg', 'UCHsx4Hqa-1ORjQTh9TYDhww', 
+'UC8rcEBzJSleTkf_-agPM20g', 
+'UC3n5uGu18FoCy23ggWWp8tA', 'oniiCh', 'UCgmPnx-EEeOrZSg5Tiw7ZRQ', 'UCO_aKKYxn4tvrqPjcTzZ6EQ', 'UCsUj0dszADCGbF3gNrQEuSQ', 
+'UCOyYb1c43VlX9rc_lT6NKQw', 'UCP0BspO_AMEe3aQqqpo89Dg', 'UCAoy6rzhSf4ydcYjJw3WoVg', 'UCYz_5n-uDuChHtLo7My1HnQ', 'UC727SQYUvx5pDDGQpTICNWg', 'UChgTyjG-pdNvxxhdsXfHQ5Q']
 
 HoloInfo = [ 
     ['Tokino Sora','ときのそら','May 15','160 cm','Ordan','hololive Generation 0','September 7th 2017','Sora-tomo','🐻💿','https://static.wikia.nocookie.net/virtualyoutuber/images/5/52/Tokino_Sora_-_Icon.png/revision/latest/scale-to-width-down/100?cb=20210901132939','https://twitter.com/tokino_sora','Sora-tomo no Minna~! Genki~?Konsomē! Tokino Sora desu! Sora-tomos~! How are you doing~? Konsomē! I\'m Tokino Sora!','Tokino+Sora','Sora','Goddess'],
@@ -89,6 +121,47 @@ client = commands.Bot(command_prefix="!")
 query1 = ('sushi+hololive+clips', 'hololive+clips',
           'hololive+vtube+tengoku+clips', 'hololive+original+songs')
 
+def liveList(lst):
+    find = 'hqdefault_live.jpg'
+    liveQueue = []
+    for i in range(len(lst)):
+        fp = urllib.request.urlopen(lst[i])
+        mybytes = fp.read()
+
+        mystr = mybytes.decode("utf8")
+        fp.close()
+
+        if find in mystr:
+            liveQueue.append(checklist[i])
+    return liveQueue
+
+def liveLink(lst):
+    liveLink = []
+    for i in range(len(lst)):
+        liveLink.append(lst[i] + ' is currently streaming! This is the stream link.' + newvid(HoloChId[checklist.index(lst[i])]))
+    return liveLink
+        
+
+
+def newvid(channel_id):
+    api_key = 'AIzaSyDaNsMbQ-YD4fUGVvtEAN9XtVTtNEFtHfw'
+
+    base_video_url = 'https://www.youtube.com/watch?v='
+    base_search_url = 'https://www.googleapis.com/youtube/v3/search?'
+
+    first_url = base_search_url+'key={}&channelId={}&part=snippet,id&order=date&maxResults=1'.format(api_key, channel_id)
+
+    video_links = ''
+    url = first_url
+    while True:
+        inp = urllib.request.urlopen(url)
+        resp = json.load(inp)
+
+        for i in resp['items']:
+            if i['id']['kind'] == "youtube#video":
+                video_links = (base_video_url + i['id']['videoId'])
+
+        return video_links
 
 def positionValue(lst,ctx):
     return [ctx in a for a in lst].index(True)
@@ -118,7 +191,8 @@ def saveid(filterList, filename):
     for year in filterList:
         f.write("{}\n".format(year))
 
-
+checklist = Extract(HoloInfo
+)
 @tasks.loop(minutes=60)
 async def holoClip():
     """A background task that gets invoked every 10 minutes."""
@@ -380,6 +454,8 @@ async def ping(ctx):
     await ctx.send(f'Pong peko! {round(client.latency * 1000)}ms')
 
 
+
+
 @client.command(aliases=['hmem'])
 async def holomem(ctx):
     d0 = datetime(2008, 8, 18)
@@ -596,7 +672,52 @@ async def youtube(ctx, *, search):
         r"watch\?v=(\S{11})", htm_content.read().decode())
     await ctx.send('https://www.youtube.com/watch?v=' + search_results[randint(0, 15)])
 
+@client.command()
+async def streaming(ctx):
+    await ctx.send('Livestream Checker')
+    find = 'hqdefault_live.jpg'
+
+    def check(m):
+        return m.author == ctx.author and m.channel == ctx.channel
+
+    msg = await client.wait_for('message', check=check, timeout=None)
+
+    if any(msg.content.lower().title() in sl for sl in HoloInfo):
+
+        position = int(positionValue(HoloInfo,msg.content.lower().title()))
+
+        fp = urllib.request.urlopen(url[position])
+        mybytes = fp.read()
+
+        mystr = mybytes.decode("utf8")
+        fp.close()
+
+        if find in mystr:
+            await ctx.send(msg.content.lower().title() + ' is currently streaming!\nThis is the stream link.')
+            await ctx.send(newvid(HoloChId[position]))
+        else:
+            await ctx.send(msg.content.lower().title() + ' is not currently streaming, check back again later!')
+
+@client.command()
+async def allstreaming(ctx):
+    await ctx.send('Livestream Checker, this will take a moment...')
+    queue = liveList(url)
+    for i in range(len(queue)):
+        await ctx.send( str(i) + ')' + queue[i] + ' is currently streaming!')
+    await ctx.send('------------------------------------------------------------------\nType show queue to show all current streams or type a number to see a specific member\'s stream!')
+
+    def check(m):
+        return m.author == ctx.author and m.channel == ctx.channel
+
+    msg = await client.wait_for('message', check=check, timeout=None)
+
+    if (int(msg.content)) <= len(queue):
+        await ctx.send(queue[(int(msg.content))] + ' is currently streaming!\nThis is the stream link. ' + newvid(HoloChId[checklist.index(queue[(int(msg.content))])]))
+    if msg.content.lower() == 'show queue':
+        for i in range(len(queue)):
+            await ctx.send(queue[i] + ' is currently streaming!\nThis is the stream link. ' + newvid(HoloChId[checklist.index(queue[i])]))
+
 
 keep_alive.keep_alive()
 
-client.run("XXX")
+client.run("OTMwMDc0NzA3NTA2NjM0ODAz.Ydwlkg.PSLayVIxxoOKQgmjMrbSr82FggI")
