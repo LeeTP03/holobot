@@ -674,7 +674,7 @@ async def youtube(ctx, *, search):
 
 @client.command()
 async def streaming(ctx):
-    await ctx.send('Livestream Checker')
+    await ctx.send('Enter a name and see if they\'re live!')
     find = 'hqdefault_live.jpg'
 
     def check(m):
@@ -700,10 +700,10 @@ async def streaming(ctx):
 
 @client.command()
 async def allstreaming(ctx):
-    await ctx.send('Livestream Checker, this will take a moment...')
+    await ctx.send('Checking all livestreams, this will take a moment...')
     queue = liveList(url)
     for i in range(len(queue)):
-        await ctx.send( str(i) + ')' + queue[i] + ' is currently streaming!')
+        await ctx.send( str(i) + ') ' + queue[i] + ' is currently streaming!')
     await ctx.send('------------------------------------------------------------------\nType show queue to show all current streams or type a number to see a specific member\'s stream!')
 
     def check(m):
@@ -721,4 +721,4 @@ async def allstreaming(ctx):
 
 keep_alive.keep_alive()
 
-client.run('OTMwMDc0NzA3NTA2NjM0ODAz.GvZ1vo.P0IBjzRVodECnEDwxHd2rOAm0HyoyjpWh7ytQs')
+client.run('XXX')
