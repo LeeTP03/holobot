@@ -720,4 +720,4 @@ async def allstreaming(ctx):
 
 keep_alive.keep_alive()
 
-client.run("OTMwMDc0NzA3NTA2NjM0ODAz.Ydwlkg.PSLayVIxxoOKQgmjMrbSr82FggI")
+client.run('XXX')
