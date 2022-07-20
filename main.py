@@ -539,35 +539,26 @@ async def holopro(ctx):
 
 @client.command()
 async def commands(ctx):
-    commands = discord.Embed(title='All Commands', description='List of all the commands in the bot with a summary',
-                             color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
-    commands.add_field(name="!commands", value='Sends this Menu', inline=False)
-    commands.add_field(
-        name="!YAGOO", value='Sends a picture of sad YAGOO', inline=False)
-    commands.add_field(name="!gamble !g",
-                       value='Gamble against a hololive member', inline=False)
-    commands.add_field(
-        name="!clip", value='Sends a random hololive clip', inline=False)
-    commands.add_field(name="!generation !gen", value='See Hololive members and their respective Generations',
-                       inline=False)
-    commands.add_field(
-        name="!hololive", value='See info of specific Hololive members', inline=False)
-    commands.add_field(name="!holomem !hmem",
-                       value='Sends your Hololive member of the day', inline=False)
-    commands.add_field(
-        name="!holopro", value='Sends the Holopro Website', inline=False)
-    commands.add_field(
-        name="!pekofy", value='Adds peko to the end of your sentence peko', inline=False)
-    commands.add_field(name="!ping", value='Shows bot latency', inline=False)
-    commands.add_field(
-        name="!sheesh", value='sheeeeeeeeeeeeeeeeeeeeeesh', inline=False)
-    commands.add_field(
-        name="!join", value='Bot joins the channel which you are in', inline=False)
-    commands.add_field(name="!dc !disconnect",
-                       value='Bot leaves the channel which you are in', inline=False)
-    commands.add_field(name="!pp", value='See Yo PP Size', inline=False)
-    commands.add_field(
-        name="!waifu", value='Set or Change your waifu', inline=False)
+    commands = discord.Embed(title='All Commands', description='List of all the commands in the bot with a summary',color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
+    commands.add_field(name="!commands", value='`Sends this Menu`', inline=False)
+    commands.add_field(name="!YAGOO", value='`Sends a picture of sad YAGOO`', inline=False)
+    commands.add_field(name="!gamble !g", value='`Gamble against a hololive member`', inline=False)
+    commands.add_field(name="!clip", value='`Sends a random hololive clip`', inline=False)
+    commands.add_field(name="!generation !gen", value='`See Hololive members and their respective Generations`', inline=False)
+    commands.add_field(name="!hololive", value='`See info of specific Hololive members`', inline=False)
+    commands.add_field(name="!holomem !hmem", value='`Sends your Hololive member of the day`', inline=False)
+    commands.add_field(name="!holopro", value='`Sends the Holopro Website`', inline=False)
+    commands.add_field(name="!pekofy", value='`Adds peko to the end of your sentence peko`', inline=False)
+    commands.add_field(name="!ping", value='`Shows bot latency`', inline=False)
+    commands.add_field(name="!sheesh", value='`sheeeeeeeeeeeeeeeeeeeeeesh`', inline=False)
+    commands.add_field(name="!join", value='`Bot joins the channel which you are in`', inline=False)
+    commands.add_field(name="!dc !disconnect",value='`Bot leaves the channel which you are in`', inline=False)
+    commands.add_field(name="!pp", value='`See Yo PP Size`', inline=False)
+    commands.add_field(name="!waifu", value='`Set or Change your waifu`', inline=False)
+    commands.add_field(name="!streaming", value='`Check if a hololive member is streaming`', inline=False)
+    commands.add_field(name="!allstreaming", value='`See all hololive members that are currently streaming`', inline=False)
+    commands.add_field(name="!upcoming", value='`Check if a hololive member has an upcoming stream`', inline=False)
+    commands.add_field(name="!allupcoming", value='`See all hololive members that have an upcoming stream`', inline=False)
 
     await ctx.send(embed=commands)
 
