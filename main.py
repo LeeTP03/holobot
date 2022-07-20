@@ -24,8 +24,13 @@ import requests
 import urllib.request 
 from bs4 import BeautifulSoup
 import json
-
+import time
 from discord.ext import commands
+from urllib.request import Request, urlopen
+
+api_key = 'XXX'
+bot_token = 'XXX'
+
 
 url = [
     'https://www.youtube.com/channel/UCp6993wxpyDPHUpavwDFqgg','https://www.youtube.com/channel/UCDqI2jOz0weumE8s7paEk6g','https://www.youtube.com/channel/UC5CwaMl1eIgY8h02uZw7u8A','https://www.youtube.com/channel/UC-hM6YJuNYVAmUWxeIr9FeA','https://www.youtube.com/channel/UC0TXe_LYZ4scaW2XMyi5_kw',
@@ -42,17 +47,17 @@ url = [
     'https://www.youtube.com/channel/UCOyYb1c43VlX9rc_lT6NKQw','https://www.youtube.com/channel/UCP0BspO_AMEe3aQqqpo89Dg','https://www.youtube.com/channel/UCAoy6rzhSf4ydcYjJw3WoVg','https://www.youtube.com/channel/UCYz_5n-uDuChHtLo7My1HnQ','https://www.youtube.com/channel/UC727SQYUvx5pDDGQpTICNWg','https://www.youtube.com/channel/UChgTyjG-pdNvxxhdsXfHQ5Q']
     
 HoloChId = ['UCp6993wxpyDPHUpavwDFqgg', 'UCDqI2jOz0weumE8s7paEk6g', 'UC5CwaMl1eIgY8h02uZw7u8A', 'UC-hM6YJuNYVAmUWxeIr9FeA', 'UC0TXe_LYZ4scaW2XMyi5_kw',
-'UCD8HOxPs4Xvsm8H0ZxXGiBw', 'UCdn5BQ06XqgXoAxIhbqw5Rg', 'UCQ0UDLQCjY0rmuxCDE38FGg', 'UCFTLzh12_nrtzqBPsTCqenA', 'UC1CfXB_kRs3C-zaeTG3oGyg',
-'UC1opHUrw8rvnsadT-iGp7Cg', 'UCXTpFs_3PqI41qX2d9tL2Rw', 'UC1suqwovbL1kzsoaZgFZLKg','UCvzGlP9oQwU--Y0r9id_jnA', 'UC7fk0CB07ly8oSl0aqKkqFg', 
-'UCvaTdHTWBGv3MKj3KVqJVCw', 'UChAnqc_AY5_I3Px5dig3X1Q', 'UCp-5t9SrOQwXMU7iIjQfARg', 
-'UC1DCedRgGHBdm81E1llLhOQ', 'UCvInZx9h3jC2JzsIzoOebWg', 'UCCzUftO8KOVkV4wQG1vkUvg', 'UCdyqAaZDKHXg4Ahi7VENThQ', 'UCl_gCybOJRIgOXw6Qb4qJzQ', 
-'UC1uv2Oq6kNxgATlCiez59hw', 'anataCh', 'UCqm3BQLlJfvkTsX_hvm0UmA', 'UCa9Y57gfeY0Zro_noHRVrnw', 'UCS9uQI-jC3DE0L4IpXyvr6w', 
-'UCUKD-uaobj9jiqB-VXt71mA', 'UCFKOVgVbGmX65RxO3EtH3iw', 'UCK9V2B22uJYu3N7eR_BT9QA', 'UCAWSyEs_Io8MtpY3m-zqILA', 
-'UC_vMYWcDjmfdpH6r4TTn1MQ', 'UCENwRMx5Yh42zWpzURebzTw', 'UCIBY1ollUsauvVi4hW4cumw', 'UCs9_O1tRPMQTHQ-N_L6FU2g', 'UC6eWCld0KwmyHFbAqK3V-Rw',
-'UCoSrY_IQQVpmIRZ9Xf-y93g', 'UCL_qhgtOy0dy1Agp8vkySQg', 'UCMwGHR0BTZuLsmjY_NT5Pwg', 'UCyl1z3jo3XHR1riLFKG5UAg', 'UCHsx4Hqa-1ORjQTh9TYDhww', 
-'UC8rcEBzJSleTkf_-agPM20g', 
-'UC3n5uGu18FoCy23ggWWp8tA', 'oniiCh', 'UCgmPnx-EEeOrZSg5Tiw7ZRQ', 'UCO_aKKYxn4tvrqPjcTzZ6EQ', 'UCsUj0dszADCGbF3gNrQEuSQ', 
-'UCOyYb1c43VlX9rc_lT6NKQw', 'UCP0BspO_AMEe3aQqqpo89Dg', 'UCAoy6rzhSf4ydcYjJw3WoVg', 'UCYz_5n-uDuChHtLo7My1HnQ', 'UC727SQYUvx5pDDGQpTICNWg', 'UChgTyjG-pdNvxxhdsXfHQ5Q']
+            'UCD8HOxPs4Xvsm8H0ZxXGiBw', 'UCdn5BQ06XqgXoAxIhbqw5Rg', 'UCQ0UDLQCjY0rmuxCDE38FGg', 'UCFTLzh12_nrtzqBPsTCqenA', 'UC1CfXB_kRs3C-zaeTG3oGyg',
+            'UC1opHUrw8rvnsadT-iGp7Cg', 'UCXTpFs_3PqI41qX2d9tL2Rw', 'UC1suqwovbL1kzsoaZgFZLKg', 'UCvzGlP9oQwU--Y0r9id_jnA', 'UC7fk0CB07ly8oSl0aqKkqFg',
+            'UCvaTdHTWBGv3MKj3KVqJVCw', 'UChAnqc_AY5_I3Px5dig3X1Q', 'UCp-5t9SrOQwXMU7iIjQfARg',
+            'UC1DCedRgGHBdm81E1llLhOQ', 'UCvInZx9h3jC2JzsIzoOebWg', 'UCCzUftO8KOVkV4wQG1vkUvg', 'UCdyqAaZDKHXg4Ahi7VENThQ', 'UCl_gCybOJRIgOXw6Qb4qJzQ',
+            'UC1uv2Oq6kNxgATlCiez59hw', 'UCZlDXzGoo7d44bwdNObFacg', 'UCqm3BQLlJfvkTsX_hvm0UmA', 'UCa9Y57gfeY0Zro_noHRVrnw', 'UCS9uQI-jC3DE0L4IpXyvr6w',
+            'UCUKD-uaobj9jiqB-VXt71mA', 'UCFKOVgVbGmX65RxO3EtH3iw', 'UCK9V2B22uJYu3N7eR_BT9QA', 'UCAWSyEs_Io8MtpY3m-zqILA',
+            'UC_vMYWcDjmfdpH6r4TTn1MQ', 'UCENwRMx5Yh42zWpzURebzTw', 'UCIBY1ollUsauvVi4hW4cumw', 'UCs9_O1tRPMQTHQ-N_L6FU2g', 'UC6eWCld0KwmyHFbAqK3V-Rw',
+            'UCoSrY_IQQVpmIRZ9Xf-y93g', 'UCL_qhgtOy0dy1Agp8vkySQg', 'UCMwGHR0BTZuLsmjY_NT5Pwg', 'UCyl1z3jo3XHR1riLFKG5UAg', 'UCHsx4Hqa-1ORjQTh9TYDhww',
+            'UC8rcEBzJSleTkf_-agPM20g',
+            'UC3n5uGu18FoCy23ggWWp8tA', 'UCmbs8T6MWqUHP1tIQvSgKrg', 'UCgmPnx-EEeOrZSg5Tiw7ZRQ', 'UCO_aKKYxn4tvrqPjcTzZ6EQ', 'UCsUj0dszADCGbF3gNrQEuSQ',
+            'UCOyYb1c43VlX9rc_lT6NKQw', 'UCP0BspO_AMEe3aQqqpo89Dg', 'UCAoy6rzhSf4ydcYjJw3WoVg', 'UCYz_5n-uDuChHtLo7My1HnQ', 'UC727SQYUvx5pDDGQpTICNWg', 'UChgTyjG-pdNvxxhdsXfHQ5Q']
 
 HoloInfo = [ 
     ['Tokino Sora','ときのそら','May 15','160 cm','Ordan','hololive Generation 0','September 7th 2017','Sora-tomo','🐻💿','https://static.wikia.nocookie.net/virtualyoutuber/images/5/52/Tokino_Sora_-_Icon.png/revision/latest/scale-to-width-down/100?cb=20210901132939','https://twitter.com/tokino_sora','Sora-tomo no Minna~! Genki~?Konsomē! Tokino Sora desu! Sora-tomos~! How are you doing~? Konsomē! I\'m Tokino Sora!','Tokino+Sora','Sora','Goddess'],
@@ -135,6 +140,27 @@ def liveList(lst):
             liveQueue.append(checklist[i])
     return liveQueue
 
+def upcomingStreams(channel_id):
+
+    base_video_url = 'https://www.youtube.com/watch?v='
+    base_search_url = 'https://www.googleapis.com/youtube/v3/search?'
+
+    first_url = base_search_url+'key={}&channelId={}&part=snippet,id&order=date&maxResults=1'.format(api_key, channel_id)
+    upcoming_links = ''
+    url = first_url
+    while True:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        inp = urllib.request.urlopen(req)
+        resp = json.load(inp)
+        
+        
+        for i in resp['items']:
+            name = i['snippet']['channelTitle']
+            if i['snippet']['liveBroadcastContent'] == "upcoming":
+                upcoming_links = (base_video_url + i['id']['videoId'])
+        return upcoming_links
+
+
 def liveLink(lst):
     liveLink = []
     for i in range(len(lst)):
@@ -144,7 +170,7 @@ def liveLink(lst):
 
 
 def newvid(channel_id):
-    api_key = 'AIzaSyDaNsMbQ-YD4fUGVvtEAN9XtVTtNEFtHfw'
+    
 
     base_video_url = 'https://www.youtube.com/watch?v='
     base_search_url = 'https://www.googleapis.com/youtube/v3/search?'
@@ -174,6 +200,19 @@ def savewrite(filterList, filename):
     f.write(filterList.lower().title() + "\n")
     f.close()
 
+def upcomingList(lst):
+    find = 'upcoming'
+    upcomingQueue = []
+    for i in range(len(lst)):
+        fp = urllib.request.urlopen(lst[i])
+        mybytes = fp.read()
+
+        mystr = mybytes.decode("utf8")
+        fp.close()
+
+        if find in mystr:
+            upcomingQueue.append(checklist[i])
+    return upcomingQueue
 
 def loadwrite(filename):
     f = open(filename, "r")
@@ -702,9 +741,13 @@ async def streaming(ctx):
 async def allstreaming(ctx):
     await ctx.send('Checking all livestreams, this will take a moment...')
     queue = liveList(url)
-    for i in range(len(queue)):
-        await ctx.send( str(i) + ') ' + queue[i] + ' is currently streaming!')
-    await ctx.send('------------------------------------------------------------------\nType show queue to show all current streams or type a number to see a specific member\'s stream!')
+
+    if len(queue) == 0:
+        await ctx.send('No hololive member is currently streaming, please check back later.')
+    else:
+        for i in range(len(queue)):
+            await ctx.send( str(i) + ') ' + queue[i] + ' is currently streaming!')
+        await ctx.send('------------------------------------------------------------------\nType show queue to show all current streams or type the **NUMBER** next to a member to see a specific member\'s stream!')
 
     def check(m):
         return m.author == ctx.author and m.channel == ctx.channel
@@ -716,9 +759,67 @@ async def allstreaming(ctx):
             await ctx.send(queue[i] + ' is currently streaming!\nThis is the stream link. ' + newvid(HoloChId[checklist.index(queue[i])]))
     elif (int(msg.content)) <= len(queue):
         await ctx.send(queue[(int(msg.content))] + ' is currently streaming!\nThis is the stream link. ' + newvid(HoloChId[checklist.index(queue[(int(msg.content))])]))
+
+
+@client.command()
+async def allupcoming(ctx):
     
+    await ctx.send('Checking all upcoming livestreams, this will take a moment...')
+    time.sleep(1)
+    await ctx.send('Note that some upcoming streams may not be shown due to the limitations of the YouTube API.')
+    queue1 = upcomingList(url)
+
+    msgstr = ''
+    j = 0
+    for i in range(len(queue1)):
+        if upcomingStreams(HoloChId[checklist.index(queue1[i])]) != '':
+            msgstr += (str(j) + ') ' + queue1[i]+ ' has an upcoming stream!\n')
+            j += 1
+    await ctx.send(msgstr)
+    time.sleep(1)
+    await ctx.send('------------------------------------------------------------------\nType show queue to show all upcoming streams or type a member\'s **NAME** to see their upcoming stream!')
+
+    def check(m):
+        return m.author == ctx.author and m.channel == ctx.channel
+
+    msg = await client.wait_for('message', check=check, timeout=None)
+    
+    if msg.content.lower() == 'show queue':
+        for i in range(len(queue1)):
+            if upcomingStreams(HoloChId[checklist.index(queue1[i])]) != '':
+                await ctx.send(queue1[i] + '\'s upcoming stream!\nThis is the stream link. ' + upcomingStreams(HoloChId[checklist.index(queue1[i])]))
+    elif any(msg.content.lower().title() in sl for sl in HoloInfo):
+        position = int(positionValue(HoloInfo,msg.content.lower().title()))
+        await ctx.send(checklist[checklist.index(HoloInfo[position][0])] + ' is currently streaming!\nThis is the stream link. ' + upcomingStreams(HoloChId[checklist.index(HoloInfo[position][0])]))
+
+@client.command()
+async def upcoming(ctx):
+    await ctx.send('Enter a name and see if they have an upcoming stream!')
+    find = 'upcoming'
+    def check(m):
+        return m.author == ctx.author and m.channel == ctx.channel
+
+    msg = await client.wait_for('message', check=check, timeout=None)
+
+    if any(msg.content.lower().title() in sl for sl in HoloInfo):
+
+        position = int(positionValue(HoloInfo,msg.content.lower().title()))
+
+        req = urllib.request.Request(url[position], headers={'User-Agent': 'Mozilla/5.0'})
+
+        fp = urllib.request.urlopen(req)
+        mybytes = fp.read()
+
+        mystr = mybytes.decode("utf8")
+        fp.close()
+        
+        if find in mystr and upcomingStreams(HoloChId[position]) != '':
+            await ctx.send(msg.content.lower().title() + ' has an upcoming stream\nThis is the stream. ' + upcomingStreams(HoloChId[position]))
+        else:
+            await ctx.send( msg.content.lower().title() + ' doesn\'t have an upcoming stream' )
+
 
 
 keep_alive.keep_alive()
 
-client.run('XXX')
+client.run(bot_token)
