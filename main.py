@@ -723,8 +723,7 @@ async def streaming(ctx):
         fp.close()
 
         if find in mystr:
-            await ctx.send(msg.content.lower().title() + ' is currently streaming!\nThis is the stream link.')
-            await ctx.send(newvid(HoloChId[position]))
+            await ctx.send(msg.content.lower().title() + ' is currently streaming!\nThis is the stream link. ' + newvid(HoloChId[position]))
         else:
             await ctx.send(msg.content.lower().title() + ' is not currently streaming, check back again later!')
 
