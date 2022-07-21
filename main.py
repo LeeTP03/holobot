@@ -243,24 +243,8 @@ def saveid(filterList, filename):
 
 checklist = Extract(HoloInfo
 )
-@tasks.loop(minutes=60)
-async def holoClip():
-    """A background task that gets invoked every 10 minutes."""
-    c = client.get_channel(930497363758424094)
-    htm_content = urllib.request.urlopen(
-        'https://www.youtube.com/results?search_query=' + query1[randint(0, 3)])
-    search_results = re.findall(
-        r"watch\?v=(\S{11})", htm_content.read().decode())
-    await c.send(
-        'Here\'s your hourly hololive clip\n''https://www.youtube.com/watch?v=' + search_results[randint(0, 20)])
 
 
-@holoClip.before_loop
-async def my_background_task_before_loop():
-    await client.wait_until_ready()
-
-
-holoClip.start()
 
 
 async def func():
