@@ -28,7 +28,8 @@ import time
 from discord.ext import commands
 from urllib.request import Request, urlopen
 
-api_key = 'XXX'
+
+api_list = ['XXX']
 bot_token = 'XXX'
 
 
@@ -44,7 +45,9 @@ url = [
     'https://www.youtube.com/channel/UCoSrY_IQQVpmIRZ9Xf-y93g','https://www.youtube.com/channel/UCL_qhgtOy0dy1Agp8vkySQg','https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg','https://www.youtube.com/channel/UCyl1z3jo3XHR1riLFKG5UAg','https://www.youtube.com/channel/UCHsx4Hqa-1ORjQTh9TYDhww',
     'https://www.youtube.com/channel/UC8rcEBzJSleTkf_-agPM20g',
     'https://www.youtube.com/channel/UC3n5uGu18FoCy23ggWWp8tA','https://www.youtube.com/c/OuroKroniiCh','https://www.youtube.com/channel/UCgmPnx-EEeOrZSg5Tiw7ZRQ','https://www.youtube.com/channel/UCO_aKKYxn4tvrqPjcTzZ6EQ','https://www.youtube.com/channel/UCsUj0dszADCGbF3gNrQEuSQ',
-    'https://www.youtube.com/channel/UCOyYb1c43VlX9rc_lT6NKQw','https://www.youtube.com/channel/UCP0BspO_AMEe3aQqqpo89Dg','https://www.youtube.com/channel/UCAoy6rzhSf4ydcYjJw3WoVg','https://www.youtube.com/channel/UCYz_5n-uDuChHtLo7My1HnQ','https://www.youtube.com/channel/UC727SQYUvx5pDDGQpTICNWg','https://www.youtube.com/channel/UChgTyjG-pdNvxxhdsXfHQ5Q']
+    'https://www.youtube.com/channel/UCOyYb1c43VlX9rc_lT6NKQw','https://www.youtube.com/channel/UCP0BspO_AMEe3aQqqpo89Dg','https://www.youtube.com/channel/UCAoy6rzhSf4ydcYjJw3WoVg',
+    'https://www.youtube.com/channel/UCYz_5n-uDuChHtLo7My1HnQ','https://www.youtube.com/channel/UC727SQYUvx5pDDGQpTICNWg','https://www.youtube.com/channel/UChgTyjG-pdNvxxhdsXfHQ5Q',
+    'https://www.youtube.com/channel/UCTvHWSfBZgtxE4sILOaurIQ','https://www.youtube.com/channel/UCZLZ8Jjx_RN2CXloOmgTHVg','https://www.youtube.com/channel/UCjLEmnpCNeisMxy134KPwWw']
     
 HoloChId = ['UCp6993wxpyDPHUpavwDFqgg', 'UCDqI2jOz0weumE8s7paEk6g', 'UC5CwaMl1eIgY8h02uZw7u8A', 'UC-hM6YJuNYVAmUWxeIr9FeA', 'UC0TXe_LYZ4scaW2XMyi5_kw',
             'UCD8HOxPs4Xvsm8H0ZxXGiBw', 'UCdn5BQ06XqgXoAxIhbqw5Rg', 'UCQ0UDLQCjY0rmuxCDE38FGg', 'UCFTLzh12_nrtzqBPsTCqenA', 'UC1CfXB_kRs3C-zaeTG3oGyg',
@@ -57,7 +60,9 @@ HoloChId = ['UCp6993wxpyDPHUpavwDFqgg', 'UCDqI2jOz0weumE8s7paEk6g', 'UC5CwaMl1eI
             'UCoSrY_IQQVpmIRZ9Xf-y93g', 'UCL_qhgtOy0dy1Agp8vkySQg', 'UCMwGHR0BTZuLsmjY_NT5Pwg', 'UCyl1z3jo3XHR1riLFKG5UAg', 'UCHsx4Hqa-1ORjQTh9TYDhww',
             'UC8rcEBzJSleTkf_-agPM20g',
             'UC3n5uGu18FoCy23ggWWp8tA', 'UCmbs8T6MWqUHP1tIQvSgKrg', 'UCgmPnx-EEeOrZSg5Tiw7ZRQ', 'UCO_aKKYxn4tvrqPjcTzZ6EQ', 'UCsUj0dszADCGbF3gNrQEuSQ',
-            'UCOyYb1c43VlX9rc_lT6NKQw', 'UCP0BspO_AMEe3aQqqpo89Dg', 'UCAoy6rzhSf4ydcYjJw3WoVg', 'UCYz_5n-uDuChHtLo7My1HnQ', 'UC727SQYUvx5pDDGQpTICNWg', 'UChgTyjG-pdNvxxhdsXfHQ5Q']
+            'UCOyYb1c43VlX9rc_lT6NKQw', 'UCP0BspO_AMEe3aQqqpo89Dg', 'UCAoy6rzhSf4ydcYjJw3WoVg',
+            'UCYz_5n-uDuChHtLo7My1HnQ', 'UC727SQYUvx5pDDGQpTICNWg', 'UChgTyjG-pdNvxxhdsXfHQ5Q',
+            'UCTvHWSfBZgtxE4sILOaurIQ', 'UCZLZ8Jjx_RN2CXloOmgTHVg', 'UCjLEmnpCNeisMxy134KPwWw']
 
 HoloInfo = [ 
     ['Tokino Sora','ときのそら','May 15','160 cm','Ordan','hololive Generation 0','September 7th 2017','Sora-tomo','🐻💿','https://static.wikia.nocookie.net/virtualyoutuber/images/5/52/Tokino_Sora_-_Icon.png/revision/latest/scale-to-width-down/100?cb=20210901132939','https://twitter.com/tokino_sora','Sora-tomo no Minna~! Genki~?Konsomē! Tokino Sora desu! Sora-tomos~! How are you doing~? Konsomē! I\'m Tokino Sora!','Tokino+Sora','Sora','Goddess'],
@@ -114,7 +119,9 @@ HoloInfo = [
     ['Kureiji Ollie','クレイジー・オリー','October 13','162 cm','LAM','HoloID 2nd Generation','December 4th 2020','#ZOMRADE','🧟‍♀️','https://static.wikia.nocookie.net/virtualyoutuber/images/3/3d/Kureiji_Ollie_-_Icon.png/revision/latest/scale-to-width-down/130?cb=20211207133008','https://twitter.com/kureijiollie','ZOMBANWA!! SUPER KAWAII ZOMBIE IDOL, KU KU KU KUREIJI OLLIE DESU~!!','kureiji+ollie','Ollie','Olivia','Zombie'],
     ['Anya Melfissa','アーニャ・メルフィッサ','March 12','147 cm','上倉エク','HoloID 2nd Generation','December 5th 2020','Melfriends','🍂','https://static.wikia.nocookie.net/virtualyoutuber/images/3/37/Anya_Melfissa_-_Icon.png/revision/latest/scale-to-width-down/130?cb=20211207133039','https://twitter.com/anyamelfissa','Good day! This is Anya Melfissa from hololive ID 2nd Generation.','anya+melfissa','Anya'],
     ['Pavolia Reine','パヴォリア・レイネ','September 9','172 cm','飯田ぽち','HoloID 2nd Generation','December 6th 2020','MERAKyats','🦚','https://static.wikia.nocookie.net/virtualyoutuber/images/3/34/Pavolia_Reine_-_Icon.png/revision/latest/scale-to-width-down/130?cb=20211207133110','https://twitter.com/pavoliareine','Attention Please, The Peafowl Princess that was blown away by the wind, I am Pavolia Reine From Hololive ID','pavolia+reine','Reine'],
-
+    ['Vestia Zeta','ベスティア・ゼータ','November 7','155 cm','あるてら','HoloID 3rd Generation','March 25th 2022','Zecratary','📜','https://static.wikia.nocookie.net/virtualyoutuber/images/2/21/Vestia_Zeta_-_Icon.png/revision/latest/scale-to-width-down/100?cb=20220406112815','https://twitter.com/vestiazeta','Mission Start! Hello, my name is Vestia Zeta from Hololive ID Gen3','vestia+zeta','Zeta'],
+    ['Kaela Kovalskia','カエラ・コヴァルスキア','August 30','173 cm','ヤスダスズヒト','HoloID 3rd Generation','March 26th 2022','Pemaloe','🔨','https://static.wikia.nocookie.net/virtualyoutuber/images/5/5a/Kaela_Kovalskia_-_Icon.png/revision/latest/scale-to-width-down/100?cb=20220406112854','https://twitter.com/kaelakovalskia','Hello everyone! Nice to meet you!~ I’m Kaela Kovalskia, the coolest blacksmith from holoID!','kaela+kovalskia','Kaela','Kae','Kovalski'],
+    ['Kobo Kanaeru','こぼ・かなえる','December 12','150 cm','ぽんかん⑧','HoloID 3rd Generation','March 27th 2022','Kobokerz','☔','https://static.wikia.nocookie.net/virtualyoutuber/images/7/7f/Kobo_Kanaeru_-_Icon.png/revision/latest/scale-to-width-down/100?cb=20220406112932','https://twitter.com/kobokanaeru','Bokobokobo- Kobo Kanaeru at your service! Your cool swaggy rain shaman from HoloID Gen 3 is here baby ;)','kobo+kanaeru','Kobo','Water Shaman','Water'],
     ]
 
 
@@ -142,6 +149,7 @@ def liveList(lst):
 
 def upcomingStreams(channel_id):
 
+    api_key = apikeySelector(api_list)
     base_video_url = 'https://www.youtube.com/watch?v='
     base_search_url = 'https://www.googleapis.com/youtube/v3/search?'
 
@@ -167,11 +175,14 @@ def liveLink(lst):
         liveLink.append(lst[i] + ' is currently streaming! This is the stream link.' + newvid(HoloChId[checklist.index(lst[i])]))
     return liveLink
         
-
+def apikeySelector(lst):
+    api_key = lst[randint(0,(len(lst)-1))]
+    print(api_key)
+    return api_key
 
 def newvid(channel_id):
     
-
+    api_key = apikeySelector(api_list)
     base_video_url = 'https://www.youtube.com/watch?v='
     base_search_url = 'https://www.googleapis.com/youtube/v3/search?'
 
@@ -575,7 +586,9 @@ async def hololive(ctx):
 
     
 
-    holomem1 = discord.Embed(title='Hololive Members', url='',description='Who\'s info would you like to know more of?', color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
+    holomem1 = discord.Embed(title='Hololive JP Members', url='',description='These are all the members from Hololive\'s Japanese Branch. \n\n Who\'s info would you like to know more of?', color=discord.Color(0x05f2f2))
+    holomem1.set_author(name=ctx.author.display_name, url="https://twitter.com/tokoyamitowa", icon_url=ctx.author.avatar_url)
+    holomem1.set_thumbnail(url='https://scontent.fkul15-1.fna.fbcdn.net/v/t1.6435-9/70413101_115744566485140_329776011417747456_n.png?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=o1pDyG5SBsEAX-cAYYb&_nc_ht=scontent.fkul15-1.fna&oh=00_AT8UzEoern0x-O_1RyumYMcRyQJCBFdgk6obkJKYRAmhZg&oe=62FE8366')
     holomem1.add_field(name='hololive Generation 0',                value='Tokino Sora \nRoboco \nHoshimachi Suisei \nSakura Miko \nAZKi',inline=True)
     holomem1.add_field(name='hololive 1st Generation',              value='Yozora Mel \nShirakami Fubuki \nNatsuiro Matsuri \nAki Rosenthal \nAkai Haato',inline=True)
     holomem1.add_field(name='hololive 2nd Generation',              value='Minato Aqua \nMurasaki Shion \nYuzuki Choco \nOozora Subaru \nNakiri Ayame', inline=True)
@@ -584,22 +597,31 @@ async def hololive(ctx):
     holomem1.add_field(name='hololive 4th Generation',              value='Tokoyami Towa \nAmane Kanata \nTsunomaki Watame \nHimemori Luna \n**Kiryuu Coco**', inline=True)
     holomem1.add_field(name='hololive 5th Generation NePoLaBo',     value='Shishiro Botan \nYukihana Lamy \nOmaru Polka \nMomosuzu Nene', inline=True)
     holomem1.add_field(name='hololive 6th Generation HoloX',        value='Kazama Iroha \nLaplus Darkness \nSakamata Chloe \nTakane Lui \nHakui Koyori', inline=True)
-    holomem1.add_field(name='holoEN 1st Generation Myth',           value='Gawr Gura \nMori Calliope \nNinomae Ina\'nis \nWatson Amelia \nTakanashi Kiara',inline=True)
-    holomem1.add_field(name='holoEN 2nd Generation Council',        value='Ouro Kronii \nNanashi Mumei \nHakos Baelz \nCeres Fauna \n**Tsukumo Sana**', inline=True)
-    holomem1.add_field(name='holoEN Project:HOPE',                  value='IRyS', inline=True)
-    holomem1.add_field(name='hololive Indonesia',                   value='Ayunda Risu \nMoona Hoshinova \nAirani Iofifteen \nKureiji Ollie \nAnya Melfissa \nPavolia Reine',inline=True)
-
+    holomem2 = discord.Embed(title='Hololive EN Members', url='',description='These are all the members from Hololive\'s English Branch. \n\n Who\'s info would you like to know more of?', color=discord.Color(0x05f2f2))
+    holomem2.set_author(name=ctx.author.display_name, url="https://twitter.com/tokoyamitowa", icon_url=ctx.author.avatar_url)
+    holomem2.set_thumbnail(url='https://yt3.ggpht.com/ytc/AKedOLQGbQmuzLspD-AWRcyeaOj5WdroBC507C31D0kTfw=s88-c-k-c0x00ffffff-no-rj')
+    holomem2.add_field(name='holoEN 1st Generation Myth',           value='Gawr Gura \nMori Calliope \nNinomae Ina\'nis \nWatson Amelia \nTakanashi Kiara',inline=True)
+    holomem2.add_field(name='holoEN 2nd Generation Council',        value='Ouro Kronii \nNanashi Mumei \nHakos Baelz \nCeres Fauna \n**Tsukumo Sana**', inline=True)
+    holomem2.add_field(name='holoEN Project:HOPE',                  value='IRyS', inline=True)
+    holomem3 = discord.Embed(title='Hololive ID Members', url='',description='These are all the members from Hololive\'s Indonesian Branch. \n\n Who\'s info would you like to know more of?', color=discord.Color(0x05f2f2))
+    holomem3.set_author(name=ctx.author.display_name, url="https://twitter.com/tokoyamitowa", icon_url=ctx.author.avatar_url)
+    holomem3.set_thumbnail(url='https://yt3.ggpht.com/ytc/AKedOLQMVO-nqdgHS1Fht9IRSWPC99g-EYsGum8tSVmDFQ=s88-c-k-c0x00ffffff-no-rj')
+    holomem3.add_field(name='holoID 1st Generation',                value='Ayunda Risu \nMoona Hoshinova \nAirani Iofifteen',inline=True)
+    holomem3.add_field(name='holoID 2nd Generation',                value='Kureiji Ollie \nAnya Melfissa \nPavolia Reine',inline=True)
+    holomem3.add_field(name='holoID 3rd Generation',                value='Vestia Zeta \nKaela Kovalskia \nKobo Kanaeru',inline=True)
     await ctx.send(embed=holomem1)
+    await ctx.send(embed=holomem2)
+    await ctx.send(embed=holomem3)
 
     def check(m):
         return m.author == ctx.author and m.channel == ctx.channel
 
     msg = await client.wait_for('message', check=check, timeout=None)
 
-    if any(msg.content.lower().title() in sl for sl in HoloInfo):
+    if any(msg.content.lower().title() in sl for sl in HoloInfo): 
         position = int(positionValue(HoloInfo,msg.content.lower().title()))
 
-        holoui = discord.Embed(title=HoloInfo[position][0], url=HoloInfo[position][10], description=HoloInfo[position][11], color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
+        holoui = discord.Embed(title=HoloInfo[position][0], url=HoloInfo[position][10], description=HoloInfo[position][11], color=discord.Color(0x05f2f2))
         holoui.set_author(name=ctx.author.display_name, url="https://twitter.com/tokoyamitowa", icon_url=ctx.author.avatar_url)
         holoui.set_thumbnail(url=HoloInfo[position][9])
 
@@ -737,7 +759,7 @@ async def allstreaming(ctx):
     else:
         for i in range(len(queue)):
             await ctx.send( str(i) + ') ' + queue[i] + ' is currently streaming!')
-        await ctx.send('------------------------------------------------------------------\nType show queue to show all current streams or type the **NUMBER** next to a member to see a specific member\'s stream!')
+        await ctx.send('----------------------------------------------------------\nType show queue to show all current streams or type the **NUMBER** next to a member to see a specific member\'s stream!')
 
     def check(m):
         return m.author == ctx.author and m.channel == ctx.channel
@@ -767,7 +789,7 @@ async def allupcoming(ctx):
             j += 1
     await ctx.send(msgstr)
     time.sleep(1)
-    await ctx.send('------------------------------------------------------------------\nType show queue to show all upcoming streams or type a member\'s **NAME** to see their upcoming stream!')
+    await ctx.send('----------------------------------------------------------\nType show queue to show all upcoming streams or type a member\'s **NAME** to see their upcoming stream!')
 
     def check(m):
         return m.author == ctx.author and m.channel == ctx.channel
@@ -807,8 +829,6 @@ async def upcoming(ctx):
             await ctx.send(msg.content.lower().title() + ' has an upcoming stream\nThis is the stream. ' + upcomingStreams(HoloChId[position]))
         else:
             await ctx.send( msg.content.lower().title() + ' doesn\'t have an upcoming stream' )
-
-
 
 keep_alive.keep_alive()
 
