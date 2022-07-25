@@ -27,10 +27,13 @@ import json
 import time
 from discord.ext import commands
 from urllib.request import Request, urlopen
+import nacl
 
 
-api_list = ['XXX']
-bot_token = 'XXX'
+api_list = ['AIzaSyCtUtezK60eC4scmRSgSwe0vgmKpB9SUsI']
+bot_token = 'OTMwMDc0NzA3NTA2NjM0ODAz.G6Vlzl.Ht8ynmc6w6RPZHsBafDMJxiJrhKn5fZm2DG0tM'
+
+
 
 
 url = [
@@ -129,6 +132,20 @@ userid = [328551968098353154, 429550829595263001]
 userwaifu = ['Amelia Watson', 'Hoshimachi Suisei']
 
 client = commands.Bot(command_prefix="!")
+
+@client.command()
+async def load(ctx,extension):
+    client.load_extension(f'cogs.{extension}')
+    await ctx.send(f'cogs.{extension} loaded')
+
+@client.command()
+async def unload(ctx,extension):
+    client.unload_extension(f'cogs.{extension}')
+    await ctx.send(f'cogs.{extension} unloaded')
+
+for filename in os.listdir('./cogs'):
+    if filename.endswith('py'):
+        client.load_extension(f'cogs.{filename[:-3]}')
 
 query1 = ('sushi+hololive+clips', 'hololive+clips',
           'hololive+vtube+tengoku+clips', 'hololive+original+songs')
@@ -635,58 +652,6 @@ async def hololive(ctx):
 @client.command()
 async def sheesh(ctx):
     await ctx.send('https://c.tenor.com/IiWXIpQo1RkAAAAC/sheesh-sheeesh.gif')
-
-
-@client.command()
-async def join(ctx):
-    user = ctx.message.author
-    vc = user.voice.channel
-
-    voice = discord.utils.get(client.voice_clients,
-                              guild=ctx.guild)  # This allows for more functionality with voice channels
-
-    # None being the default value if the bot isnt in a channel (which is why the is_connected() is returning errors)
-    if voice == None:
-        await vc.connect()
-        await ctx.send(f"Joined **{vc}**")
-    else:
-        await ctx.send("I'm already connected!")
-
-
-@client.command()
-async def dc(ctx):
-    user = ctx.message.author
-    vc = user.voice.channel
-
-    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
-    await ctx.voice_client.disconnect(force=True)
-    await ctx.send(f'Disconnected from **{vc}**')
-
-
-@client.command()
-async def play(ctx, ):
-    def check(m): return m.author == ctx.author and m.channel == ctx.channel
-
-    msg = await client.wait_for('message', check=check, timeout=None)
-
-    c = ctx.channel
-    htm_content = urllib.request.urlopen(
-        'https://www.youtube.com/results?search_query=' + msg.content)
-    search_results = re.findall(
-        r"watch\?v=(\S{11})", htm_content.read().decode())
-    musicvid = 'https://www.youtube.com/watch?v=' + search_results[0]
-
-    FFMPEG_OPTIONS = {
-        'before_options': '-reconnect 1 -reconnect_streamed 1 =reconnect_delay_max 5', 'options': '-vn'}
-    YDL_OPTIONS = {'format': 'bestaudio'}
-
-    vc = ctx.voice_client
-
-    with youtube_dl.YoutubeDL(YDL_OPTIONS) as ydl:
-        info = ydl.extract_info(musicvid, download=False)
-        url2 = info['formats'][0]['url']
-        source = await discord.FFmpegOpusAudio.from_probe(url2, **FFMPEG_OPTIONS)
-        vc.play(source)
 
 
 @client.command()
