@@ -27,11 +27,10 @@ import json
 import time
 from discord.ext import commands
 from urllib.request import Request, urlopen
-import nacl
 
 
-api_list = ['AIzaSyCtUtezK60eC4scmRSgSwe0vgmKpB9SUsI']
-bot_token = 'OTMwMDc0NzA3NTA2NjM0ODAz.G6Vlzl.Ht8ynmc6w6RPZHsBafDMJxiJrhKn5fZm2DG0tM'
+api_list = ['']
+bot_token = ''
 
 
 
@@ -131,7 +130,8 @@ HoloInfo = [
 userid = [328551968098353154, 429550829595263001]
 userwaifu = ['Amelia Watson', 'Hoshimachi Suisei']
 
-client = commands.Bot(command_prefix="!")
+intents = discord.Intents.all()
+client = commands.Bot(command_prefix="!",intents=intents)
 
 @client.command()
 async def load(ctx,extension):
@@ -317,8 +317,8 @@ async def profile(ctx):
         profile = discord.Embed(title='{}\'s Profile'.format(ctx.message.author.display_name),
                                 color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
         profile.set_author(name=ctx.message.author.display_name, url="https://twitter.com/tokoyamitowa",
-                           icon_url=ctx.message.author.avatar_url)
-        profile.set_thumbnail(url=ctx.author.avatar_url)
+                           icon_url=ctx.message.author.avatar)
+        profile.set_thumbnail(url=ctx.author.avatar)
         profile.add_field(
             name='Name', value=ctx.message.author.display_name, inline=False)
         profile.add_field(name='Waifu', value=userwaifu[userid.index(
@@ -328,8 +328,8 @@ async def profile(ctx):
         profile = discord.Embed(title='{}\'s Profile'.format(ctx.message.author.display_name),
                                 color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
         profile.set_author(name=ctx.message.author.display_name, url="https://twitter.com/tokoyamitowa",
-                           icon_url=ctx.message.author.avatar_url)
-        profile.set_thumbnail(url=ctx.author.avatar_url)
+                           icon_url=ctx.message.author.avatar)
+        profile.set_thumbnail(url=ctx.author.avatar)
         profile.add_field(
             name='Name', value=ctx.message.author.display_name, inline=False)
         profile.add_field(name='Waifu', value='None', inline=False)
@@ -523,7 +523,7 @@ async def holomem(ctx):
     await ctx.send("Today\'s lucky holomember today is : " + HoloInfo[x][0])
 
     holoui = discord.Embed(title=HoloInfo[position][0], url=HoloInfo[position][10], description=HoloInfo[position][11], color=discord.Color.from_rgb(randint(0, 255), randint(0, 255), randint(0, 255)))
-    holoui.set_author(name=ctx.author.display_name, url="https://twitter.com/tokoyamitowa", icon_url=ctx.author.avatar_url)
+    holoui.set_author(name=ctx.author.display_name, url="https://twitter.com/tokoyamitowa", icon_url=ctx.author.avatar)
     holoui.set_thumbnail(url=HoloInfo[position][9])
 
     holoui.add_field(name='Name', value=HoloInfo[position][0], inline=True)
@@ -588,7 +588,7 @@ async def hololive(ctx):
     
 
     holomem1 = discord.Embed(title='Hololive JP Members', url='',description='These are all the members from Hololive\'s Japanese Branch. \n\n Who\'s info would you like to know more of?', color=discord.Color(0x05f2f2))
-    holomem1.set_author(name=ctx.author.display_name, url="https://twitter.com/tokoyamitowa", icon_url=ctx.author.avatar_url)
+    holomem1.set_author(name=ctx.author.display_name, url="https://twitter.com/tokoyamitowa", icon_url=ctx.author.avatar)
     holomem1.set_thumbnail(url='https://scontent.fkul15-1.fna.fbcdn.net/v/t1.6435-9/70413101_115744566485140_329776011417747456_n.png?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=o1pDyG5SBsEAX-cAYYb&_nc_ht=scontent.fkul15-1.fna&oh=00_AT8UzEoern0x-O_1RyumYMcRyQJCBFdgk6obkJKYRAmhZg&oe=62FE8366')
     holomem1.add_field(name='hololive Generation 0',                value='Tokino Sora \nRoboco \nHoshimachi Suisei \nSakura Miko \nAZKi',inline=True)
     holomem1.add_field(name='hololive 1st Generation',              value='Yozora Mel \nShirakami Fubuki \nNatsuiro Matsuri \nAki Rosenthal \nAkai Haato',inline=True)
@@ -599,13 +599,13 @@ async def hololive(ctx):
     holomem1.add_field(name='hololive 5th Generation NePoLaBo',     value='Shishiro Botan \nYukihana Lamy \nOmaru Polka \nMomosuzu Nene', inline=True)
     holomem1.add_field(name='hololive 6th Generation HoloX',        value='Kazama Iroha \nLaplus Darkness \nSakamata Chloe \nTakane Lui \nHakui Koyori', inline=True)
     holomem2 = discord.Embed(title='Hololive EN Members', url='',description='These are all the members from Hololive\'s English Branch. \n\n Who\'s info would you like to know more of?', color=discord.Color(0x05f2f2))
-    holomem2.set_author(name=ctx.author.display_name, url="https://twitter.com/tokoyamitowa", icon_url=ctx.author.avatar_url)
+    holomem2.set_author(name=ctx.author.display_name, url="https://twitter.com/tokoyamitowa", icon_url=ctx.author.avatar)
     holomem2.set_thumbnail(url='https://yt3.ggpht.com/ytc/AKedOLQGbQmuzLspD-AWRcyeaOj5WdroBC507C31D0kTfw=s88-c-k-c0x00ffffff-no-rj')
     holomem2.add_field(name='holoEN 1st Generation Myth',           value='Gawr Gura \nMori Calliope \nNinomae Ina\'nis \nWatson Amelia \nTakanashi Kiara',inline=True)
     holomem2.add_field(name='holoEN 2nd Generation Council',        value='Ouro Kronii \nNanashi Mumei \nHakos Baelz \nCeres Fauna \n**Tsukumo Sana**', inline=True)
     holomem2.add_field(name='holoEN Project:HOPE',                  value='IRyS', inline=True)
     holomem3 = discord.Embed(title='Hololive ID Members', url='',description='These are all the members from Hololive\'s Indonesian Branch. \n\n Who\'s info would you like to know more of?', color=discord.Color(0x05f2f2))
-    holomem3.set_author(name=ctx.author.display_name, url="https://twitter.com/tokoyamitowa", icon_url=ctx.author.avatar_url)
+    holomem3.set_author(name=ctx.author.display_name, url="https://twitter.com/tokoyamitowa", icon_url=ctx.author.avatar)
     holomem3.set_thumbnail(url='https://yt3.ggpht.com/ytc/AKedOLQMVO-nqdgHS1Fht9IRSWPC99g-EYsGum8tSVmDFQ=s88-c-k-c0x00ffffff-no-rj')
     holomem3.add_field(name='holoID 1st Generation',                value='Ayunda Risu \nMoona Hoshinova \nAirani Iofifteen',inline=True)
     holomem3.add_field(name='holoID 2nd Generation',                value='Kureiji Ollie \nAnya Melfissa \nPavolia Reine',inline=True)
@@ -623,7 +623,7 @@ async def hololive(ctx):
         position = int(positionValue(HoloInfo,msg.content.lower().title()))
 
         holoui = discord.Embed(title=HoloInfo[position][0], url=HoloInfo[position][10], description=HoloInfo[position][11], color=discord.Color(0x05f2f2))
-        holoui.set_author(name=ctx.author.display_name, url="https://twitter.com/tokoyamitowa", icon_url=ctx.author.avatar_url)
+        holoui.set_author(name=ctx.author.display_name, url="https://twitter.com/tokoyamitowa", icon_url=ctx.author.avatar)
         holoui.set_thumbnail(url=HoloInfo[position][9])
 
         holoui.add_field(name='Name', value=HoloInfo[position][0], inline=True)
