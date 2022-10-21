@@ -29,8 +29,9 @@ from discord.ext import commands
 from urllib.request import Request, urlopen
 
 
-api_list = ['']
-bot_token = ''
+
+api_list = ['AIzaSyCtUtezK60eC4scmRSgSwe0vgmKpB9SUsI']
+bot_token = 'OTMwMDc0NzA3NTA2NjM0ODAz.GGWJGo.HIGj325FMYBVzI96lp3REknD7iK3o0xB4B_fNE'
 
 
 
