@@ -44,9 +44,6 @@ To use the Hololive Bot, simply invite it to your Discord server and start using
 - `!allstreaming`: See a list of all Hololive members currently live.
 - `!allupcoming`: See a list of all Hololive members with upcoming streams.
 
-## Contributing
-
-We welcome contributions from the community to improve and enhance the Hololive Bot. If you have any ideas for new features or improvements, please open an issue or submit a pull request. Check out our [Contributing Guidelines](CONTRIBUTING.md) for more information.
 
 **Note:** This Discord bot is not officially affiliated with Hololive or Hololive members. It is a fan-made personal project for entertainment purposes.
 
